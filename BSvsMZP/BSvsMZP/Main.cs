@@ -12,6 +12,9 @@ namespace BSvsMZP
 		{
 			NSApplication.Init();
 			NSApplication.Main(args);
+
+
+
 		}
 	}
 }

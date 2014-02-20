@@ -40,6 +40,21 @@ namespace BSvsMZP
 				return (MainWindow)base.Window;
 			}
 		}
+
+
+		public override void AwakeFromNib ()
+		{
+			base.AwakeFromNib();
+
+			udpExample udp = new udpExample ();
+			udp.receiveMessage(12355);
+			udp.sendMessage("127.0.0.1", 12355, "hi");
+
+
+
+		}
+
+
 	}
 }
 
