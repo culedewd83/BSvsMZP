@@ -2,6 +2,7 @@ using System;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using Common;
 
 namespace BSvsMZP
 {
@@ -21,12 +22,14 @@ namespace BSvsMZP
 
 					try{
 
-						Console.WriteLine("Begin listening...");
+						Console.WriteLine("Begin listening on port: " + port + "...");
 
-						UdpClient udpClient = new UdpClient ();
 						IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, port);
 
-						Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint); 
+						UdpClient udpServer = new UdpClient (RemoteIpEndPoint);
+
+
+						Byte[] receiveBytes = udpServer.Receive(ref RemoteIpEndPoint); 
 						string returnData = Encoding.ASCII.GetString(receiveBytes);
 
 						// Uses the IPEndPoint object to determine which of these two hosts responded.
@@ -51,8 +54,17 @@ namespace BSvsMZP
 		{
 			try{
 				UdpClient udpClient = new UdpClient (0);
+
 				udpClient.Connect(remoteAddress, remotePort);
 				Byte[] messageBytes = Encoding.ASCII.GetBytes(messageStr);
+				//udpClient.Send(messageBytes, messageBytes.Length);
+
+				Messages.JoinGame test = new Messages.JoinGame();
+				test.ANumber = "A01537812";
+				ByteList bytes = new ByteList();
+				test.Encode(bytes);
+				messageBytes = bytes.ToBytes();
+				Console.WriteLine("num of bytes: " + messageBytes.Length);
 				udpClient.Send(messageBytes, messageBytes.Length);
 
 				Console.WriteLine("Message sent");

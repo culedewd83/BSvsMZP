@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using Messages;
+using Common;
 
 namespace BSvsMZP
 {
@@ -46,11 +48,35 @@ namespace BSvsMZP
 		{
 			base.AwakeFromNib();
 
+
+			JoinGame joinGame = new JoinGame();
+			joinGame.ANumber = "A01537812";
+			var type = joinGame.GetType();
+
+			var instance = Activator.CreateInstance(type);
+
+
+			Console.WriteLine("Type is: ");
+
+
+			ByteList bytes = new ByteList();
+			joinGame.Encode(bytes);
+
+			JoinGame testGame = new JoinGame ();
+			testGame.Decode(bytes);
+
+
+			Console.WriteLine(joinGame.ANumber);
+			Console.WriteLine(testGame.ANumber);
+
+
+			Communicator comm = new Communicator (12355);
+			comm.startListening();
+
+
 			udpExample udp = new udpExample ();
-			udp.receiveMessage(12355);
+			//udp.receiveMessage(12355);
 			udp.sendMessage("127.0.0.1", 12355, "hi");
-
-
 
 		}
 

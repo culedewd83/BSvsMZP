@@ -11,6 +11,7 @@
     <RootNamespace>BSvsMZP</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <AssemblyName>BSvsMZP</AssemblyName>
+    <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,10 +67,23 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="MonoMac" />
+    <Reference Include="Common">
+      <HintPath>dlls\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Messages">
+      <HintPath>dlls\Messages.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>dlls\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>dlls\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="dev\" />
+    <Folder Include="dlls\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.cs" />
@@ -83,6 +97,8 @@
       <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
     <Compile Include="dev\udpExample.cs" />
+    <Compile Include="Communicator.cs" />
+    <Compile Include="MessageMaker.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
@@ -90,6 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="dlls\Common.dll" />
+    <None Include="dlls\log4net.dll" />
+    <None Include="dlls\nunit.framework.dll" />
+    <None Include="dlls\Messages.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
