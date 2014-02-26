@@ -96,9 +96,7 @@
     <Compile Include="AppDelegate.designer.cs">
       <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
-    <Compile Include="dev\udpExample.cs" />
     <Compile Include="Communicator.cs" />
-    <Compile Include="MessageMaker.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

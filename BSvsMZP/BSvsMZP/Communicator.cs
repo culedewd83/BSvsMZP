@@ -9,41 +9,102 @@ namespace BSvsMZP
 {
 	public class Communicator
 	{
-		private int port;
+		private int commPort;
 		private bool shouldListen;
 		private UdpClient udpServer;
-		private IPEndPoint RemoteIpEndPoint;
+		private IPEndPoint commEndPoint;
 		private System.Threading.Thread listenerThread;
 		private Hashtable messagesHashTable;
+		private Dictionary<string, Common.EndPoint> cachedEndPoints;
 		private Object thisLock = new Object();
 
-		public Communicator(int port)
+
+
+		public Communicator(int commPort)
 		{
-			this.port = port;
+			this.commPort = commPort;
 			shouldListen = false;
 			setupUDP();
 			setupMessageHashTable();
+			cachedEndPoints = new Dictionary<string, Common.EndPoint> ();
 		}
+
+
+
+		public Communicator()
+		{
+			commPort = 0;
+			shouldListen = false;
+			setupUDP();
+			setupMessageHashTable();
+			cachedEndPoints = new Dictionary<string, Common.EndPoint> ();
+		}
+
+
 
 		private void setupUDP () {
-			RemoteIpEndPoint = new IPEndPoint (IPAddress.Any, port);
-			udpServer = new UdpClient (RemoteIpEndPoint);
+			commEndPoint = new IPEndPoint (IPAddress.Any, commPort);
+			udpServer = new UdpClient (commEndPoint);
+			commPort = getIncommingPort();
+
 		}
 
-		public void changePort(int port) {
-			this.port = port;
-			if (shouldListen) {
-				stopListening();
-				startListening();
-			} else {
-				setupUDP();
+
+
+		public bool changePort(int port) {
+
+			int oldPortNum = commPort;
+			commPort = port;
+
+			try{
+				if (shouldListen) {
+					stopListening();
+					startListening();
+				} else {
+					setupUDP();
+				}
 			}
+			catch (Exception e) {
+				Console.WriteLine(e.ToString());
+				commPort = oldPortNum;
+				return false;
+			}
+
+			return true;
 		}
+
+
+
+		public bool changePort() {
+
+			int oldPortNum = commPort;
+			commPort = 0;
+
+			try{
+				if (shouldListen) {
+					stopListening();
+					startListening();
+				} else {
+					setupUDP();
+				}
+			}
+			catch (Exception e) {
+				Console.WriteLine(e.ToString());
+				commPort = oldPortNum;
+				return false;
+			}
+
+			return true;
+		}
+
+
 
 		public void startListening() {
 			shouldListen = true;
 			listenForMessages();
 		}
+
+
 
 		public void stopListening () {
 			shouldListen = false;
@@ -51,44 +112,39 @@ namespace BSvsMZP
 			setupUDP();
 		}
 
+
+
 		private void listenForMessages () {
 			listenerThread = new System.Threading.Thread(delegate(){
+
+				IPEndPoint receivedMessageEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
 				try{
 					while(shouldListen){
 
-						Byte[] receiveBytes = udpServer.Receive(ref RemoteIpEndPoint); 
+						Byte[] receiveBytes = udpServer.Receive(ref receivedMessageEndPoint); 
 
 						Common.ByteList bList = new Common.ByteList();
 						bList.CopyFromBytes(receiveBytes);
-						addMessageToHash(bList);
 
+						Common.EndPoint msgEP = new Common.EndPoint ();
+						msgEP.Address = BitConverter.ToInt32(IPAddress.Parse(receivedMessageEndPoint.Address.ToString()).GetAddressBytes(), 0);
+						msgEP.Port = receivedMessageEndPoint.Port;
 
+						addMessageToHash(bList, msgEP);
 
-
-
-						/*
-						// Uses the IPEndPoint object to determine which of these two hosts responded.
-						Console.WriteLine("This is the message you received ");
-							//returnData.ToString());
-						Console.WriteLine("This message was sent from " +
-							RemoteIpEndPoint.Address.ToString() +
-							" on their port number " +
-							RemoteIpEndPoint.Port.ToString());
-						*/
 					}
 				}
 				catch (Exception e) {
 					Console.WriteLine(e.ToString());
 				}
-				Console.WriteLine("End listening...");
 			});
 
 			listenerThread.Start();
 		}
 
 
-		private void addMessageToHash (Common.ByteList byteList) {
+		private void addMessageToHash (Common.ByteList byteList, Common.EndPoint msgEP) {
 
 			System.Threading.Thread adderThread = new System.Threading.Thread(delegate(){
 				string messageClassId = ((Messages.Message.MESSAGE_CLASS_IDS)byteList.PeekInt16()).ToString();
@@ -97,16 +153,21 @@ namespace BSvsMZP
 				if (type != null) {
 					var msg = Activator.CreateInstance(type);
 					msg.GetType().GetMethod("Decode").Invoke(msg, new System.Object[]{byteList});
+					Messages.MessageNumber convID = (Messages.MessageNumber)msg.GetType().GetProperty("ConversationId").GetValue(msg, null);
+					string convStr = "" + convID.ProcessId + "," + convID.SeqNumber;
 					lock (thisLock) {
+						if (!cachedEndPoints.ContainsKey(convStr)) {
+							cachedEndPoints.Add(convStr, msgEP);
+						}
 						messagesHashTable[messageClassId].GetType().GetMethod("Add").Invoke(messagesHashTable[messageClassId], new System.Object[]{msg});
 					}
-						
 				}
-
 			});
 
 			adderThread.Start();
 		}
+
+
 
 		private void setupMessageHashTable () {
 
@@ -123,6 +184,54 @@ namespace BSvsMZP
 			}
 		}
 
+
+
+		public void sendMessage(byte[] msg, Common.EndPoint endPoint, Messages.MessageNumber convID) {
+
+			string convStr = "" + convID.ProcessId + "," + convID.SeqNumber;
+
+			lock (thisLock) {
+				if (!cachedEndPoints.ContainsKey(convStr)) {
+					cachedEndPoints.Add(convStr, endPoint);
+				}
+			}
+			string ipAddress = new IPAddress(BitConverter.GetBytes(endPoint.Address)).ToString();
+			udpServer.Send(msg, msg.Length, ipAddress, endPoint.Port);
+		}
+
+
+
+		public void sendMessage(byte[] msg, Messages.MessageNumber convID) {
+
+			string convStr = "" + convID.ProcessId + "," + convID.SeqNumber;
+
+			if (cachedEndPoints.ContainsKey(convStr)) {
+
+				Common.EndPoint endPoint = cachedEndPoints [convStr];
+				string ipAddress = new IPAddress(BitConverter.GetBytes(endPoint.Address)).ToString();
+				udpServer.Send(msg, msg.Length, ipAddress, endPoint.Port);
+			}
+		}
+
+
+
+		public int getIncommingPort() {
+			return ((IPEndPoint)udpServer.Client.LocalEndPoint).Port;
+		}
+
+
+
+		public Hashtable getMessages() {
+
+			Hashtable toReturn;
+
+			lock (thisLock) {
+				toReturn = (Hashtable)messagesHashTable.Clone();
+				setupMessageHashTable();
+			}
+
+			return toReturn;
+		}
 
 	}
 }

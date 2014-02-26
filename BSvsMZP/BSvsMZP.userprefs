@@ -1,4 +1,4 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/25/2014 3:47:32 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/26/2014 2:51:23 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="BSvsMZP/Communicator.cs">
     <Files>
@@ -7,7 +7,7 @@
       <File FileName="BSvsMZP/MainWindowController.cs" Line="1" Column="1" />
       <File FileName="BSvsMZP/Info.plist" />
       <File FileName="BSvsMZP/dev/udpExample.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/Communicator.cs" Line="104" Column="6" />
+      <File FileName="BSvsMZP/Communicator.cs" Line="102" Column="54" />
       <File FileName="BSvsMZP/MessageMaker.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

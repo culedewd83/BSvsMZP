@@ -5,6 +5,8 @@ using MonoMac.Foundation;
 using MonoMac.AppKit;
 using Messages;
 using Common;
+using System.Net;
+using System.Collections;
 
 namespace BSvsMZP
 {
@@ -49,34 +51,35 @@ namespace BSvsMZP
 			base.AwakeFromNib();
 
 
-			JoinGame joinGame = new JoinGame();
-			joinGame.ANumber = "A01537812";
-			var type = joinGame.GetType();
-
-			var instance = Activator.CreateInstance(type);
-
-
-			Console.WriteLine("Type is: ");
-
-
-			ByteList bytes = new ByteList();
-			joinGame.Encode(bytes);
-
-			JoinGame testGame = new JoinGame ();
-			testGame.Decode(bytes);
-
-
-			Console.WriteLine(joinGame.ANumber);
-			Console.WriteLine(testGame.ANumber);
-
-
-			Communicator comm = new Communicator (12355);
+			Communicator comm = new Communicator ();
+			comm.startListening();
+			comm.changePort();
 			comm.startListening();
 
 
-			udpExample udp = new udpExample ();
-			//udp.receiveMessage(12355);
-			udp.sendMessage("127.0.0.1", 12355, "hi");
+			Common.EndPoint localEP = new Common.EndPoint ();
+			localEP.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
+			localEP.Port = comm.getIncommingPort();
+
+			JoinGame joinGame = new JoinGame();
+			joinGame.ANumber = "A01537812";
+			ByteList bytes = new ByteList();
+			joinGame.Encode(bytes);
+		
+
+			comm.sendMessage(bytes.ToBytes(), localEP, joinGame.ConversationId);
+
+
+			System.Threading.Thread.Sleep(2000);
+
+
+
+			for (int i = 0; i < 10; ++i) {
+
+				comm.sendMessage(bytes.ToBytes(), joinGame.ConversationId);
+			}
+
+
 
 		}
 
