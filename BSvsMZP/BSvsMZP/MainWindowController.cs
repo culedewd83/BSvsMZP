@@ -66,6 +66,11 @@ namespace BSvsMZP
 			Listener listener = new Listener(comm, msgQue);
 			listener.startListening();
 
+			InstigatorStrategies iStrats = new InstigatorStrategies (comm, msgQue, 123);
+			iStrats.getExcuse(localEP, new Common.Tick (), (excuse) => {
+				receiveExcuse(excuse);
+			});
+
 
 			JoinGame joinGame = new JoinGame();
 			joinGame.ANumber = "A01537812";
@@ -90,6 +95,11 @@ namespace BSvsMZP
 
 		}
 
+
+
+		public void receiveExcuse(Common.Excuse excuse) {
+			Console.WriteLine("received an excuse");
+		}
 
 	}
 }

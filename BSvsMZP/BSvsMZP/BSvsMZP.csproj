@@ -102,6 +102,7 @@
     <Compile Include="MessagesLists.cs" />
     <Compile Include="InstigatorStrategies.cs" />
     <Compile Include="ResponderStrategies.cs" />
+    <Compile Include="Doer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
