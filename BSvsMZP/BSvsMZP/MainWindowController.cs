@@ -57,20 +57,27 @@ namespace BSvsMZP
 			comm.startListening();
 
 
+
 			Common.EndPoint localEP = new Common.EndPoint ();
 			localEP.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
 			localEP.Port = comm.getIncommingPort();
+
+			MessageQueue msgQue = new MessageQueue ();
+			Listener listener = new Listener(comm, msgQue);
+			listener.startListening();
+
 
 			JoinGame joinGame = new JoinGame();
 			joinGame.ANumber = "A01537812";
 			ByteList bytes = new ByteList();
 			joinGame.Encode(bytes);
-		
+
+
 
 			comm.sendMessage(bytes.ToBytes(), localEP, joinGame.ConversationId);
 
 
-			System.Threading.Thread.Sleep(2000);
+			//System.Threading.Thread.Sleep(2000);
 
 
 
@@ -79,7 +86,7 @@ namespace BSvsMZP
 				comm.sendMessage(bytes.ToBytes(), joinGame.ConversationId);
 			}
 
-
+			System.Threading.Thread.Sleep(2000);
 
 		}
 

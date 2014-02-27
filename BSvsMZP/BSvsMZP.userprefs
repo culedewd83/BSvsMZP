@@ -1,14 +1,14 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/26/2014 2:51:23 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/27/2014 12:36:42 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BSvsMZP/Communicator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BSvsMZP/MessageQueue.cs">
     <Files>
       <File FileName="BSvsMZP/Main.cs" Line="1" Column="1" />
       <File FileName="BSvsMZP/MainWindow.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/MainWindowController.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/MainWindowController.cs" Line="84" Column="4" />
       <File FileName="BSvsMZP/Info.plist" />
-      <File FileName="BSvsMZP/dev/udpExample.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/Communicator.cs" Line="102" Column="54" />
-      <File FileName="BSvsMZP/MessageMaker.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/Communicator.cs" Line="162" Column="32" />
+      <File FileName="BSvsMZP/Listener.cs" Line="6" Column="3" />
+      <File FileName="BSvsMZP/MessageQueue.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
