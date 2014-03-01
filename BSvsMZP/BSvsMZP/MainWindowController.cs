@@ -51,47 +51,47 @@ namespace BSvsMZP
 			base.AwakeFromNib();
 
 
-			Communicator comm = new Communicator ();
-			comm.startListening();
-			comm.changePort();
+			Communicator comm = new Communicator();
 			comm.startListening();
 
-
+			AgentInfo agentInfo = AgentInfo.Instance;
+			agentInfo.processId = 4445;
 
 			Common.EndPoint localEP = new Common.EndPoint ();
 			localEP.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
-			localEP.Port = comm.getIncommingPort();
+			localEP.Port = comm.getPort();
 
-			MessageQueue msgQue = new MessageQueue ();
+
+			MessageQueue msgQue = new MessageQueue();
 			Listener listener = new Listener(comm, msgQue);
 			listener.startListening();
 
-			InstigatorStrategies iStrats = new InstigatorStrategies (comm, msgQue, 123);
-			iStrats.getExcuse(localEP, new Common.Tick (), (excuse) => {
+
+
+			InstigatorStrategies iStrats = new InstigatorStrategies (comm, msgQue);
+
+			Messages.GetResource getExcuseMsg = new Messages.GetResource (agentInfo.gameID, GetResource.PossibleResourceType.Excuse, new Common.Tick ());
+
+			getExcuseMsg.ConversationId = Common.MessageNumber.Create(); 
+
+			getExcuseMsg.ConversationId.ProcessId = agentInfo.processId;
+			getExcuseMsg.ConversationId.SeqNumber = agentInfo.getConvoNum();
+
+
+			getExcuseMsg.MessageNr.ProcessId = agentInfo.processId;
+			getExcuseMsg.MessageNr.SeqNumber = 1;
+
+			Envelope getExcuseEnv = new Envelope (getExcuseMsg, localEP);
+
+			iStrats.getExcuse(getExcuseEnv, (excuse) => {
 				receiveExcuse(excuse);
 			});
-
-
-			JoinGame joinGame = new JoinGame();
-			joinGame.ANumber = "A01537812";
-			ByteList bytes = new ByteList();
-			joinGame.Encode(bytes);
+				
 
 
 
-			comm.sendMessage(bytes.ToBytes(), localEP, joinGame.ConversationId);
+			System.Threading.Thread.Sleep(5000);
 
-
-			//System.Threading.Thread.Sleep(2000);
-
-
-
-			for (int i = 0; i < 10; ++i) {
-
-				comm.sendMessage(bytes.ToBytes(), joinGame.ConversationId);
-			}
-
-			System.Threading.Thread.Sleep(2000);
 
 		}
 

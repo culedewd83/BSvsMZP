@@ -96,13 +96,16 @@
     <Compile Include="AppDelegate.designer.cs">
       <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Communicator.cs" />
     <Compile Include="Listener.cs" />
-    <Compile Include="MessageQueue.cs" />
     <Compile Include="MessagesLists.cs" />
     <Compile Include="InstigatorStrategies.cs" />
     <Compile Include="ResponderStrategies.cs" />
     <Compile Include="Doer.cs" />
+    <Compile Include="ExcuseDoer.cs" />
+    <Compile Include="Envelope.cs" />
+    <Compile Include="AgentInfo.cs" />
+    <Compile Include="Communicator.cs" />
+    <Compile Include="MessageQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

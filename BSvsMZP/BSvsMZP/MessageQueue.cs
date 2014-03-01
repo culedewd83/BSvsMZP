@@ -1,18 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BSvsMZP
 {
 	public class MessageQueue
 	{
-		public MessagesLists newConvMessages;
-		public Dictionary<string, MessagesLists> convInProgressMessages; 
-
+		public List<Envelope> newConvoQueue;
+		public Dictionary<string, List<Envelope>> convoInProgressQueue;
 
 		public MessageQueue()
 		{
-			newConvMessages = new MessagesLists();
-			convInProgressMessages = new Dictionary<string, MessagesLists>();
+			newConvoQueue = new List<Envelope>();
+			convoInProgressQueue = new Dictionary<string, List<Envelope>>();
 		}
 	}
 }
