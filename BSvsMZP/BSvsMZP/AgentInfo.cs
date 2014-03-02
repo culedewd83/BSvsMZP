@@ -9,6 +9,8 @@ namespace BSvsMZP
 		short convoNum;
 		public short processId { get; set; }
 		public short gameID { get; set; }
+		public string remoteServerAddress { get; set; }
+		public int remoteServerPort { get; set; }
 
 
 		public static AgentInfo Instance

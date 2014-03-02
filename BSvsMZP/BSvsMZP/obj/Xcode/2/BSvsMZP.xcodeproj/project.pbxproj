@@ -1,0 +1,226 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		13703E290000000000000000 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17014AC70000000000000000 /* Cocoa.framework */; };
+		133D5B0D0000000000000000 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16CE67AB0000000000000000 /* Foundation.framework */; };
+		389D65BF0000000000000000 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E725D0000000000000000 /* MainWindow.xib */; };
+		1883F4310000000000000000 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C1500CF0000000000000000 /* MainMenu.xib */; };
+		3BFB8F410000000000000000 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F8C9BDF0000000000000000 /* Info.plist */; };
+		36888AC60000000000000000 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = 3A1997640000000000000000 /* MainWindow.h */; };
+		9D9FB8100000000000000000 /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B081F00000000000000000 /* MainWindow.m */; };
+		229E70B70000000000000000 /* MainWindowController.h in Sources */ = {isa = PBXBuildFile; fileRef = 262F7D550000000000000000 /* MainWindowController.h */; };
+		25FC9A390000000000000000 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298DA6D70000000000000000 /* MainWindowController.m */; };
+		19677C820000000000000000 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 1CF889200000000000000000 /* AppDelegate.h */; };
+		941522D00000000000000000 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CD25ECB00000000000000000 /* AppDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		28BE8DFC0000000000000000 /* BSvsMZP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "BSvsMZP.app"; path = "BSvsMZP.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17014AC70000000000000000 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cocoa.framework"; path = "System/Library/Frameworks/Cocoa.framework"; sourceTree = SDKROOT; };
+		16CE67AB0000000000000000 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; };
+		3C2E725D0000000000000000 /* MainWindow.xib */ = {isa = PBXFileReference; name = "MainWindow.xib"; path = "MainWindow.xib"; sourceTree = "<group>"; };
+		1C1500CF0000000000000000 /* MainMenu.xib */ = {isa = PBXFileReference; name = "MainMenu.xib"; path = "MainMenu.xib"; sourceTree = "<group>"; };
+		3F8C9BDF0000000000000000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info.plist"; path = "Info.plist"; sourceTree = "<group>"; };
+		3A1997640000000000000000 /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MainWindow.h"; path = "MainWindow.h"; sourceTree = "<group>"; };
+		D6B081F00000000000000000 /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "MainWindow.m"; path = "MainWindow.m"; sourceTree = "<group>"; };
+		262F7D550000000000000000 /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MainWindowController.h"; path = "MainWindowController.h"; sourceTree = "<group>"; };
+		298DA6D70000000000000000 /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "MainWindowController.m"; path = "MainWindowController.m"; sourceTree = "<group>"; };
+		1CF889200000000000000000 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AppDelegate.h"; path = "AppDelegate.h"; sourceTree = "<group>"; };
+		CD25ECB00000000000000000 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate.m"; path = "AppDelegate.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3735A3900000000000000000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13703E290000000000000000 /* Cocoa.framework in Frameworks */,
+				133D5B0D0000000000000000 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		174F151E0000000000000000 = {
+			isa = PBXGroup;
+			children = (
+				1E8C96A00000000000000000 /* BSvsMZP */,
+				22023AF80000000000000000 /* Frameworks */,
+				C9BEF4400000000000000000 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9BEF4400000000000000000 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				28BE8DFC0000000000000000 /* BSvsMZP.app */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+		22023AF80000000000000000 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				16CE67AB0000000000000000 /* Foundation.framework */,
+				17014AC70000000000000000 /* Cocoa.framework */,
+			);
+			name = "Frameworks";
+			sourceTree = "<group>";
+		};
+		1E8C96A00000000000000000 /* BSvsMZP */ = {
+			isa = PBXGroup;
+			children = (
+				1CF889200000000000000000 /* AppDelegate.h */,
+				3F8C9BDF0000000000000000 /* Info.plist */,
+				1C1500CF0000000000000000 /* MainMenu.xib */,
+				3A1997640000000000000000 /* MainWindow.h */,
+				3C2E725D0000000000000000 /* MainWindow.xib */,
+				262F7D550000000000000000 /* MainWindowController.h */,
+				166F19380000000000000000 /* Supporting Files */,
+			);
+			name = "BSvsMZP";
+			sourceTree = "<group>";
+		};
+		166F19380000000000000000 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CD25ECB00000000000000000 /* AppDelegate.m */,
+				D6B081F00000000000000000 /* MainWindow.m */,
+				298DA6D70000000000000000 /* MainWindowController.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2103CB6C0000000000000000 /* BSvsMZP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E0B68220000000000000000 /* Build configuration list for PBXNativeTarget "BSvsMZP" */;
+			buildPhases = (
+				2560647A0000000000000000 /* Sources */,
+				3735A3900000000000000000 /* Frameworks */,
+				E4B040500000000000000000 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BSvsMZP";
+			productName = "BSvsMZP";
+			productReference = 28BE8DFC0000000000000000 /* BSvsMZP.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1650A5920000000000000000 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 135842480000000000000000 /* Build configuration list for PBXProject "BSvsMZP" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 174F151E0000000000000000;
+			productRefGroup = C9BEF4400000000000000000 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2103CB6C0000000000000000 /* BSvsMZP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E4B040500000000000000000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				389D65BF0000000000000000 /* MainWindow.xib in Resources */,
+				1883F4310000000000000000 /* MainMenu.xib in Resources */,
+				3BFB8F410000000000000000 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2560647A0000000000000000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36888AC60000000000000000 /* MainWindow.h in Sources */,
+				9D9FB8100000000000000000 /* MainWindow.m in Sources */,
+				229E70B70000000000000000 /* MainWindowController.h in Sources */,
+				25FC9A390000000000000000 /* MainWindowController.m in Sources */,
+				19677C820000000000000000 /* AppDelegate.h in Sources */,
+				941522D00000000000000000 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		14D473ED0000000000000000 /* MonoMac */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx;
+			};
+			name = MonoMac;
+		};
+		8A51C6E00000000000000000 /* MonoMac */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				PRODUCT_NAME = "BSvsMZP";
+				WRAPPER_EXTENSION = app;
+			};
+			name = MonoMac;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		135842480000000000000000 /* Build configuration list for PBXProject "BSvsMZP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14D473ED0000000000000000 /* MonoMac */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = MonoMac;
+		};
+		1E0B68220000000000000000 /* Build configuration list for PBXNativeTarget "BSvsMZP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A51C6E00000000000000000 /* MonoMac */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = MonoMac;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1650A5920000000000000000 /* Project object */;
+}

@@ -106,6 +106,8 @@
     <Compile Include="AgentInfo.cs" />
     <Compile Include="Communicator.cs" />
     <Compile Include="MessageQueue.cs" />
+    <Compile Include="ExcuseReplyDictionary.cs" />
+    <Compile Include="Agent.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

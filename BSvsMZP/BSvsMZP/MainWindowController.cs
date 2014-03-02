@@ -54,6 +54,9 @@ namespace BSvsMZP
 			Communicator comm = new Communicator();
 			comm.startListening();
 
+			Communicator comm2 = new Communicator();
+			comm2.startListening();
+
 			AgentInfo agentInfo = AgentInfo.Instance;
 			agentInfo.processId = 4445;
 
@@ -61,11 +64,23 @@ namespace BSvsMZP
 			localEP.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
 			localEP.Port = comm.getPort();
 
+			Common.EndPoint localEP2 = new Common.EndPoint ();
+			localEP2.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
+			localEP2.Port = comm2.getPort();
+
 
 			MessageQueue msgQue = new MessageQueue();
 			Listener listener = new Listener(comm, msgQue);
 			listener.startListening();
 
+			MessageQueue msgQue2 = new MessageQueue();
+			Listener listener2 = new Listener(comm2, msgQue2);
+			listener2.startListening();
+
+
+
+			ExcuseDoer doer = new ExcuseDoer (comm2, msgQue2);
+			doer.startListening();
 
 
 			InstigatorStrategies iStrats = new InstigatorStrategies (comm, msgQue);
@@ -81,7 +96,7 @@ namespace BSvsMZP
 			getExcuseMsg.MessageNr.ProcessId = agentInfo.processId;
 			getExcuseMsg.MessageNr.SeqNumber = 1;
 
-			Envelope getExcuseEnv = new Envelope (getExcuseMsg, localEP);
+			Envelope getExcuseEnv = new Envelope (getExcuseMsg, localEP2);
 
 			iStrats.getExcuse(getExcuseEnv, (excuse) => {
 				receiveExcuse(excuse);

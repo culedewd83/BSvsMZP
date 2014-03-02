@@ -52,7 +52,7 @@ namespace BSvsMZP
 
 					if (messagesMoved == 0) {
 						// Be nice, sleep for a awhile...
-						System.Threading.Thread.Sleep(50);
+						System.Threading.Thread.Sleep(5);
 					}
 				}
 			});
