@@ -19,6 +19,7 @@ namespace BSvsMZP
 			shouldListen = false;
 			envelopeBuffer = new List<Envelope>();
 			udpServer = new UdpClient(new IPEndPoint (IPAddress.Any, 0));
+			udpServer.Client.ReceiveTimeout = 10;
 		}
 			
 
@@ -38,9 +39,8 @@ namespace BSvsMZP
 
 				IPEndPoint receivedMessageEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
-				try{
-					while(shouldListen){
-
+				while(shouldListen){
+					try{
 						Byte[] receiveBytes = udpServer.Receive(ref receivedMessageEndPoint); 
 
 						Common.ByteList byteList = new Common.ByteList();
@@ -54,10 +54,15 @@ namespace BSvsMZP
 							envelopeBuffer.Add(new Envelope(Messages.Message.Create(byteList), msgEP));
 						}
 					}
+					catch (Exception e) {
+						//Console.WriteLine(e.ToString());
+					}
 				}
-				catch (Exception e) {
-					Console.WriteLine(e.ToString());
-				}
+
+				udpServer.Close();
+				udpServer = new UdpClient(new IPEndPoint (IPAddress.Any, 0));
+				udpServer.Client.ReceiveTimeout = 10;
+				
 			});
 
 			listenerThread.Start();

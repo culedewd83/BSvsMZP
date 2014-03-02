@@ -8,7 +8,7 @@ namespace BSvsMZP
 		private MessageQueue msgQueue;
 		private System.Threading.Thread doerThread;
 		private bool shouldListen;
-		ExcuseReplyDictionary replyDictionary;
+		ReplyDictionary replyDictionary;
 		AgentInfo agentInfo;
 
 
@@ -18,7 +18,7 @@ namespace BSvsMZP
 			this.msgQueue = msgQueue;
 			this.agentInfo = agentInfo;
 			shouldListen = false;
-			replyDictionary = new ExcuseReplyDictionary(comm, msgQueue, agentInfo);
+			replyDictionary = new ReplyDictionary(comm, msgQueue, agentInfo);
 		}
 
 
@@ -41,20 +41,16 @@ namespace BSvsMZP
 				while (shouldListen) {
 					messagesMoved = 0;
 
-					int stopAt = msgQueue.newConvoQueue.Count;
 
-					for (int i = 0; i < stopAt; ++i) {
+					while (msgQueue.newConvoQueue.Count > 0) {
 						messagesMoved++;
+						Envelope currEnv = msgQueue.newConvoQueue.Dequeue();
 
-
-						if (msgQueue.newConvoQueue[0].message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.GetResource.ToString())) {
+						if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.GetResource.ToString())) {
 							// Does not reply to this type!!!
 						}
-
-
-
-						msgQueue.newConvoQueue.RemoveAt(0);
 					}
+
 
 					if (messagesMoved == 0) {
 						// Be nice, sleep for a awhile...

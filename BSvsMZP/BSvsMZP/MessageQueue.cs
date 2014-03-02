@@ -5,13 +5,13 @@ namespace BSvsMZP
 {
 	public class MessageQueue
 	{
-		public List<Envelope> newConvoQueue;
-		public Dictionary<string, List<Envelope>> convoInProgressQueue;
+		public Queue<Envelope> newConvoQueue;
+		public Dictionary<string, Queue<Envelope>> convoInProgressQueue;
 
 		public MessageQueue()
 		{
-			newConvoQueue = new List<Envelope>();
-			convoInProgressQueue = new Dictionary<string, List<Envelope>>();
+			newConvoQueue = new Queue<Envelope>();
+			convoInProgressQueue = new Dictionary<string, Queue<Envelope>>();
 		}
 	}
 }

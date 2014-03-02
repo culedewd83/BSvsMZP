@@ -46,6 +46,9 @@ namespace BSvsMZP
 		MonoMac.AppKit.NSTextField studentListenPortlbl { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSComboBox studentMessageBox { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField studentMessagesInQueuelbl { get; set; }
 
 		[Outlet]
@@ -65,6 +68,33 @@ namespace BSvsMZP
 
 		[Outlet]
 		MonoMac.AppKit.NSButton studentSendMessageButton { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSButton whineListenButton { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSTextField whineListeningPortlbl { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSTextField whineMessagesInQueuelbl { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSTextField whineMessagesMovedlbl { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSTextField whineRemoteAddress { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSButton whineRemoteAddressButton { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSTextField whineRemotePort { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSButton whineRemotePortButton { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSButton whineSendMessageButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -113,29 +143,9 @@ namespace BSvsMZP
 				excuseSendMessageButton = null;
 			}
 
-			if (studentSendMessageButton != null) {
-				studentSendMessageButton.Dispose ();
-				studentSendMessageButton = null;
-			}
-
-			if (studentRemoteAddress != null) {
-				studentRemoteAddress.Dispose ();
-				studentRemoteAddress = null;
-			}
-
-			if (studentRemotePort != null) {
-				studentRemotePort.Dispose ();
-				studentRemotePort = null;
-			}
-
-			if (studentRemoteAddressButton != null) {
-				studentRemoteAddressButton.Dispose ();
-				studentRemoteAddressButton = null;
-			}
-
-			if (studentRemotePortButton != null) {
-				studentRemotePortButton.Dispose ();
-				studentRemotePortButton = null;
+			if (studentListenButton != null) {
+				studentListenButton.Dispose ();
+				studentListenButton = null;
 			}
 
 			if (studentListenPortlbl != null) {
@@ -143,9 +153,14 @@ namespace BSvsMZP
 				studentListenPortlbl = null;
 			}
 
-			if (studentListenButton != null) {
-				studentListenButton.Dispose ();
-				studentListenButton = null;
+			if (studentMessageBox != null) {
+				studentMessageBox.Dispose ();
+				studentMessageBox = null;
+			}
+
+			if (studentMessagesInQueuelbl != null) {
+				studentMessagesInQueuelbl.Dispose ();
+				studentMessagesInQueuelbl = null;
 			}
 
 			if (studentMessagesMovedlbl != null) {
@@ -153,9 +168,74 @@ namespace BSvsMZP
 				studentMessagesMovedlbl = null;
 			}
 
-			if (studentMessagesInQueuelbl != null) {
-				studentMessagesInQueuelbl.Dispose ();
-				studentMessagesInQueuelbl = null;
+			if (studentRemoteAddress != null) {
+				studentRemoteAddress.Dispose ();
+				studentRemoteAddress = null;
+			}
+
+			if (studentRemoteAddressButton != null) {
+				studentRemoteAddressButton.Dispose ();
+				studentRemoteAddressButton = null;
+			}
+
+			if (studentRemotePort != null) {
+				studentRemotePort.Dispose ();
+				studentRemotePort = null;
+			}
+
+			if (studentRemotePortButton != null) {
+				studentRemotePortButton.Dispose ();
+				studentRemotePortButton = null;
+			}
+
+			if (studentSendMessageButton != null) {
+				studentSendMessageButton.Dispose ();
+				studentSendMessageButton = null;
+			}
+
+			if (whineRemoteAddress != null) {
+				whineRemoteAddress.Dispose ();
+				whineRemoteAddress = null;
+			}
+
+			if (whineRemoteAddressButton != null) {
+				whineRemoteAddressButton.Dispose ();
+				whineRemoteAddressButton = null;
+			}
+
+			if (whineRemotePort != null) {
+				whineRemotePort.Dispose ();
+				whineRemotePort = null;
+			}
+
+			if (whineRemotePortButton != null) {
+				whineRemotePortButton.Dispose ();
+				whineRemotePortButton = null;
+			}
+
+			if (whineListeningPortlbl != null) {
+				whineListeningPortlbl.Dispose ();
+				whineListeningPortlbl = null;
+			}
+
+			if (whineListenButton != null) {
+				whineListenButton.Dispose ();
+				whineListenButton = null;
+			}
+
+			if (whineMessagesMovedlbl != null) {
+				whineMessagesMovedlbl.Dispose ();
+				whineMessagesMovedlbl = null;
+			}
+
+			if (whineMessagesInQueuelbl != null) {
+				whineMessagesInQueuelbl.Dispose ();
+				whineMessagesInQueuelbl = null;
+			}
+
+			if (whineSendMessageButton != null) {
+				whineSendMessageButton.Dispose ();
+				whineSendMessageButton = null;
 			}
 		}
 	}

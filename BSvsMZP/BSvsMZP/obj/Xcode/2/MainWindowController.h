@@ -19,15 +19,25 @@
 	NSTextField *_excuseRemoteAddress;
 	NSTextField *_excuseRemotePort;
 	NSButton *_excuseSendMessageButton;
-    NSButton *_studentSendMessageButton;
-    NSTextField *_studentRemoteAddress;
-    NSTextField *_studentRemotePort;
-    NSButton *_studentRemoteAddressButton;
-    NSButton *_studentRemotePortButton;
-    NSTextField *_studentListenPortlbl;
-    NSButton *_studentListenButton;
-    NSTextField *_studentMessagesMovedlbl;
-    NSTextField *_studentMessagesInQueuelbl;
+	NSButton *_studentListenButton;
+	NSTextField *_studentListenPortlbl;
+	NSComboBox *_studentMessageBox;
+	NSTextField *_studentMessagesInQueuelbl;
+	NSTextField *_studentMessagesMovedlbl;
+	NSTextField *_studentRemoteAddress;
+	NSButton *_studentRemoteAddressButton;
+	NSTextField *_studentRemotePort;
+	NSButton *_studentRemotePortButton;
+	NSButton *_studentSendMessageButton;
+	NSButton *_whineListenButton;
+	NSTextField *_whineListeningPortlbl;
+	NSTextField *_whineMessagesInQueuelbl;
+	NSTextField *_whineMessagesMovedlbl;
+	NSTextField *_whineRemoteAddress;
+	NSButton *_whineRemoteAddressButton;
+	NSTextField *_whineRemotePort;
+	NSButton *_whineRemotePortButton;
+	NSButton *_whineSendMessageButton;
 }
 
 @property (nonatomic, retain) IBOutlet NSButton *excuseAddressButton;
@@ -48,21 +58,42 @@
 
 @property (nonatomic, retain) IBOutlet NSButton *excuseSendMessageButton;
 
+@property (nonatomic, retain) IBOutlet NSButton *studentListenButton;
 
+@property (nonatomic, retain) IBOutlet NSTextField *studentListenPortlbl;
 
+@property (nonatomic, retain) IBOutlet NSComboBox *studentMessageBox;
 
-@property (assign) IBOutlet NSButton *studentSendMessageButton;
-@property (assign) IBOutlet NSTextField *studentRemoteAddress;
-@property (assign) IBOutlet NSTextField *studentRemotePort;
-@property (assign) IBOutlet NSButton *studentRemoteAddressButton;
-@property (assign) IBOutlet NSButton *studentRemotePortButton;
-@property (assign) IBOutlet NSTextField *studentListenPortlbl;
-@property (assign) IBOutlet NSButton *studentListenButton;
-@property (assign) IBOutlet NSTextField *studentMessagesMovedlbl;
-@property (assign) IBOutlet NSTextField *studentMessagesInQueuelbl;
+@property (nonatomic, retain) IBOutlet NSTextField *studentMessagesInQueuelbl;
 
+@property (nonatomic, retain) IBOutlet NSTextField *studentMessagesMovedlbl;
 
+@property (nonatomic, retain) IBOutlet NSTextField *studentRemoteAddress;
 
+@property (nonatomic, retain) IBOutlet NSButton *studentRemoteAddressButton;
 
+@property (nonatomic, retain) IBOutlet NSTextField *studentRemotePort;
+
+@property (nonatomic, retain) IBOutlet NSButton *studentRemotePortButton;
+
+@property (nonatomic, retain) IBOutlet NSButton *studentSendMessageButton;
+
+@property (nonatomic, retain) IBOutlet NSButton *whineListenButton;
+
+@property (nonatomic, retain) IBOutlet NSTextField *whineListeningPortlbl;
+
+@property (nonatomic, retain) IBOutlet NSTextField *whineMessagesInQueuelbl;
+
+@property (nonatomic, retain) IBOutlet NSTextField *whineMessagesMovedlbl;
+
+@property (nonatomic, retain) IBOutlet NSTextField *whineRemoteAddress;
+
+@property (nonatomic, retain) IBOutlet NSButton *whineRemoteAddressButton;
+
+@property (nonatomic, retain) IBOutlet NSTextField *whineRemotePort;
+
+@property (nonatomic, retain) IBOutlet NSButton *whineRemotePortButton;
+
+@property (nonatomic, retain) IBOutlet NSButton *whineSendMessageButton;
 
 @end

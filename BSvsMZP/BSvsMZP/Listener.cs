@@ -47,9 +47,9 @@ namespace BSvsMZP
 						totalMessagesMoved++;
 						string convKey = "" + envelope.message.ConversationId.ProcessId + "," + envelope.message.ConversationId.SeqNumber;
 						if (msgQueue.convoInProgressQueue.ContainsKey(convKey)) {
-							msgQueue.convoInProgressQueue[convKey].Add(envelope);
+							msgQueue.convoInProgressQueue[convKey].Enqueue(envelope);
 						} else {
-							msgQueue.newConvoQueue.Add(envelope);
+							msgQueue.newConvoQueue.Enqueue(envelope);
 						}
 					}
 

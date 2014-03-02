@@ -17,6 +17,7 @@
                 <outlet property="excuseSendMessageButton" destination="rxa-hS-wLC" id="udP-gk-uKr"/>
                 <outlet property="studentListenButton" destination="zT1-KJ-ELi" id="ncF-Rm-3JB"/>
                 <outlet property="studentListenPortlbl" destination="l5f-KB-ttI" id="Aij-b3-aSB"/>
+                <outlet property="studentMessageBox" destination="qDJ-RW-Zxu" id="iyI-pG-JVf"/>
                 <outlet property="studentMessagesInQueuelbl" destination="3cd-Kn-R8B" id="1hL-Of-Nj8"/>
                 <outlet property="studentMessagesMovedlbl" destination="bIe-YQ-uFu" id="Np1-gc-X7b"/>
                 <outlet property="studentRemoteAddress" destination="dRu-JJ-fVf" id="gol-hf-oxv"/>
@@ -24,6 +25,15 @@
                 <outlet property="studentRemotePort" destination="d9z-mo-lMX" id="EZA-2q-bgO"/>
                 <outlet property="studentRemotePortButton" destination="4js-fA-FBt" id="MrY-NL-5Zk"/>
                 <outlet property="studentSendMessageButton" destination="4IK-EJ-2SR" id="DTh-9A-4vI"/>
+                <outlet property="whineListenButton" destination="Wc8-TE-IEP" id="pwB-0c-R2L"/>
+                <outlet property="whineListeningPortlbl" destination="zv4-OU-9Be" id="eQX-TO-rF9"/>
+                <outlet property="whineMessagesInQueuelbl" destination="S5L-lK-aSM" id="WRg-LW-bku"/>
+                <outlet property="whineMessagesMovedlbl" destination="Kep-Gp-YS7" id="4LI-XD-FAI"/>
+                <outlet property="whineRemoteAddress" destination="E8g-y9-tFZ" id="2fF-AC-D2n"/>
+                <outlet property="whineRemoteAddressButton" destination="FjL-jA-oQa" id="e0T-Ci-I0w"/>
+                <outlet property="whineRemotePort" destination="Gb0-AB-WUn" id="IVv-MG-tTX"/>
+                <outlet property="whineRemotePortButton" destination="dTW-Wc-Vbh" id="ClI-lc-1FJ"/>
+                <outlet property="whineSendMessageButton" destination="qeZ-eV-oif" id="9Db-Gh-YYR"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
         </customObject>
@@ -196,7 +206,7 @@
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="FWL-Jk-spa">
-                        <rect key="frame" x="46" y="267" width="223" height="17"/>
+                        <rect key="frame" x="46" y="187" width="223" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Messages moved:" id="4MU-2I-Qi6">
                             <font key="font" metaFont="system"/>
@@ -205,7 +215,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="l9X-Tf-6zR">
-                        <rect key="frame" x="46" y="234" width="223" height="17"/>
+                        <rect key="frame" x="46" y="154" width="223" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Messages in queue:" id="efD-nV-ESS">
                             <font key="font" metaFont="system"/>
@@ -214,7 +224,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="rxa-hS-wLC">
-                        <rect key="frame" x="42" y="137" width="163" height="32"/>
+                        <rect key="frame" x="42" y="227" width="163" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Send Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iCd-hD-1gD">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -239,7 +249,7 @@
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Kep-Gp-YS7">
-                        <rect key="frame" x="321" y="267" width="223" height="17"/>
+                        <rect key="frame" x="321" y="187" width="223" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Messages moved:" id="QjR-4V-QuR">
                             <font key="font" metaFont="system"/>
@@ -248,7 +258,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="S5L-lK-aSM">
-                        <rect key="frame" x="321" y="234" width="223" height="17"/>
+                        <rect key="frame" x="321" y="154" width="223" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Messages in queue:" id="3Rr-NY-kga">
                             <font key="font" metaFont="system"/>
@@ -257,7 +267,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="qeZ-eV-oif">
-                        <rect key="frame" x="317" y="137" width="163" height="32"/>
+                        <rect key="frame" x="316" y="227" width="163" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Send Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Q7L-FD-bn8">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -282,7 +292,7 @@
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="bIe-YQ-uFu">
-                        <rect key="frame" x="598" y="274" width="195" height="17"/>
+                        <rect key="frame" x="597" y="187" width="195" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Messages moved:" id="1FK-dS-SQj">
                             <font key="font" metaFont="system"/>
@@ -291,7 +301,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="3cd-Kn-R8B">
-                        <rect key="frame" x="598" y="241" width="195" height="17"/>
+                        <rect key="frame" x="597" y="154" width="195" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Messages in queue:" id="Rdw-rP-WaE">
                             <font key="font" metaFont="system"/>
@@ -300,13 +310,40 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="4IK-EJ-2SR">
-                        <rect key="frame" x="594" y="144" width="163" height="32"/>
+                        <rect key="frame" x="593" y="227" width="163" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Send Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sTa-Cx-yBB">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
+                    <comboBox verticalHuggingPriority="750" id="qDJ-RW-Zxu">
+                        <rect key="frame" x="600" y="263" width="156" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="aDu-gi-qLH">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </comboBoxCell>
+                    </comboBox>
+                    <comboBox verticalHuggingPriority="750" id="8DI-pP-HOv">
+                        <rect key="frame" x="322" y="263" width="156" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="PRy-oB-heM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </comboBoxCell>
+                    </comboBox>
+                    <comboBox verticalHuggingPriority="750" id="FGX-Ie-T1M">
+                        <rect key="frame" x="46" y="263" width="156" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="b1g-Ow-WCC">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </comboBoxCell>
+                    </comboBox>
                 </subviews>
             </view>
         </window>

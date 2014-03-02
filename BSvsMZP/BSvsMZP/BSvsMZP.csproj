@@ -100,7 +100,6 @@
     <Compile Include="MessagesLists.cs" />
     <Compile Include="InstigatorStrategies.cs" />
     <Compile Include="ResponderStrategies.cs" />
-    <Compile Include="Doer.cs" />
     <Compile Include="ExcuseDoer.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="AgentInfo.cs" />
@@ -111,6 +110,8 @@
     <Compile Include="ExcuseFactory.cs" />
     <Compile Include="StudentDoer.cs" />
     <Compile Include="BrilliantStudent.cs" />
+    <Compile Include="WhiningDoer.cs" />
+    <Compile Include="WhineFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

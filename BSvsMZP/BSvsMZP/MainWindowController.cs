@@ -16,6 +16,9 @@ namespace BSvsMZP
 		ExcuseFactory eFactory;
 		bool eFactoryShouldListen = false;
 
+		WhineFactory wFactory;
+		bool wFactoryShouldListen = false;
+
 		BrilliantStudent student;
 		bool studentShouldListen = false;
 
@@ -60,9 +63,7 @@ namespace BSvsMZP
 
 
 			eFactory = new ExcuseFactory ();
-			excuseRemoteAddress.StringValue = eFactory.agentInfo.remoteServerAddress;
-			excuseRemotePort.StringValue = "" + eFactory.agentInfo.remoteServerPort;
-			excuseListenPortlbl.StringValue = "Listening on port: " + eFactory.comm.getPort();
+
 			excuseAddressButton.Activated += (object sender, EventArgs e) => {
 				int oldPort = eFactory.agentInfo.remoteServerPort;
 				int newPort = 0;
@@ -89,12 +90,39 @@ namespace BSvsMZP
 
 
 
+			wFactory = new WhineFactory ();
+
+			whineRemoteAddressButton.Activated += (object sender, EventArgs e) => {
+				int oldPort = wFactory.agentInfo.remoteServerPort;
+				int newPort = 0;
+				int.TryParse(whineRemotePort.StringValue, out newPort);
+				wFactory.setRemoteEndPoint(whineRemoteAddress.StringValue, newPort);
+			};
+			whineRemotePortButton.Activated += (object sender, EventArgs e) => {
+				int oldPort = wFactory.agentInfo.remoteServerPort;
+				int newPort = 0;
+				int.TryParse(whineRemotePort.StringValue, out newPort);
+				wFactory.setRemoteEndPoint(whineRemoteAddress.StringValue, newPort);
+
+			};
+			whineListenButton.Activated += (object sender, EventArgs e) => {
+				if(!wFactoryShouldListen) {
+					wFactory.startListening();
+					whineListenButton.Title = "Stop Listening";
+					wFactoryShouldListen = true;
+				} else {
+					wFactory.stopListening();
+					whineListenButton.Title = "Start Listening";
+					wFactoryShouldListen = false;
+				}
+			};
+
+
+
 
 
 			student = new BrilliantStudent ();
-			studentRemoteAddress.StringValue = student.agentInfo.remoteServerAddress;
-			studentRemotePort.StringValue = "" + student.agentInfo.remoteServerPort;
-			studentListenPortlbl.StringValue = "Listening on port: " + student.comm.getPort();
+
 			studentRemoteAddressButton.Activated += (object sender, EventArgs e) => {
 				int oldPort = student.agentInfo.remoteServerPort;
 				int newPort = 0;
@@ -120,9 +148,30 @@ namespace BSvsMZP
 				}
 			};
 			studentSendMessageButton.Activated += (object sender, EventArgs e) => {
-				student.getExcuse(student.agentInfo.remoteServerEndPoint);
-				Console.WriteLine("sent to port: " + student.agentInfo.remoteServerPort);
+				if(studentMessageBox.StringValue.Equals("GetExcuse")) {
+					student.getExcuse(student.agentInfo.remoteServerEndPoint);
+				} else if(studentMessageBox.StringValue.Equals("GetWhiningTwine")) {
+					student.getWhiningTwine(student.agentInfo.remoteServerEndPoint);
+				}
 			};
+
+
+			excuseRemoteAddress.StringValue = eFactory.agentInfo.remoteServerAddress;
+			excuseRemotePort.StringValue = "" + eFactory.agentInfo.remoteServerPort;
+
+			whineRemoteAddress.StringValue = wFactory.agentInfo.remoteServerAddress;
+			whineRemotePort.StringValue = "" + wFactory.agentInfo.remoteServerPort;
+
+			studentRemoteAddress.StringValue = student.agentInfo.remoteServerAddress;
+			studentRemotePort.StringValue = "" + student.agentInfo.remoteServerPort;
+
+			studentMessageBox.UsesDataSource = true;
+			studentMessageBox.Completes = true;
+			studentMessageBox.RefusesFirstResponder = true;
+			studentMessageBox.DataSource = new StudentDataSource ();
+			studentMessageBox.SelectItem(0);
+
+
 
 
 			System.Threading.Thread updateWindowThread = new System.Threading.Thread(delegate(){
@@ -144,11 +193,49 @@ namespace BSvsMZP
 
 		public void updateMainWindow() {
 			InvokeOnMainThread(() => {
+
+				excuseListenPortlbl.StringValue = "Listening on port: " + eFactory.comm.getPort();
+				whineListeningPortlbl.StringValue = "Listening on port: " + wFactory.comm.getPort();
+				studentListenPortlbl.StringValue = "Listening on port: " + student.comm.getPort();
+
 				excuseMessagesMovedlbl.StringValue = "Messages moved: " + eFactory.MessagesMovedToQueue;
+				whineMessagesMovedlbl.StringValue = "Messages moved: " + wFactory.MessagesMovedToQueue;
 				studentMessagesMovedlbl.StringValue = "Messages moved: " + student.MessagesMovedToQueue;
 			});
 		}
 
+
+
+		class StudentDataSource : NSComboBoxDataSource
+		{
+			List<string> messages = new List<string> {
+				"GetExcuse",
+				"GetWhiningTwine"
+			};
+
+
+			public override string CompletedString (NSComboBox comboBox, string uncompletedString)
+			{
+				return messages.Find (n => n.StartsWith (uncompletedString, StringComparison.InvariantCultureIgnoreCase));
+			}
+
+			public override int IndexOfItem (NSComboBox comboBox, string value)
+			{
+				return messages.FindIndex (n => n.Equals (value, StringComparison.InvariantCultureIgnoreCase));
+			}
+
+			public override int ItemCount (NSComboBox comboBox)
+			{
+				return messages.Count;
+			}
+
+			public override NSObject ObjectValueForItem (NSComboBox comboBox, int index)
+			{
+				return NSObject.FromObject (messages [index]);
+			}
+
+
+		}
 
 	}
 }

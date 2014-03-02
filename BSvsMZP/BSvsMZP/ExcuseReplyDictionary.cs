@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BSvsMZP
 {
-	public class ExcuseReplyDictionary
+	public class ReplyDictionary
 	{
 		public Dictionary<string, Action<Envelope>> Strategies;
 		private ResponderStrategies strats;
@@ -11,7 +11,7 @@ namespace BSvsMZP
 		Communicator comm;
 		AgentInfo agentInfo;
 
-		public ExcuseReplyDictionary(Communicator comm, MessageQueue msgQueue, AgentInfo agentInfo)
+		public ReplyDictionary(Communicator comm, MessageQueue msgQueue, AgentInfo agentInfo)
 		{
 			this.msgQueue = msgQueue;
 			this.comm = comm;
@@ -23,6 +23,11 @@ namespace BSvsMZP
 
 			Strategies.Add("Excuse", delegate(Envelope envelope){
 				strats.sendExcuse(envelope);
+			});
+
+
+			Strategies.Add("WhiningTwine", delegate(Envelope envelope){
+				strats.sendWhiningTwine(envelope);
 			});
 
 

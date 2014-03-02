@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Collections.Generic;
+using MonoMac.AppKit;
+using MonoMac.Foundation;
 
 namespace BSvsMZP
 {
@@ -13,7 +15,9 @@ namespace BSvsMZP
 		public AgentInfo agentInfo;
 		public long MessagesMovedToQueue { get { return listener.totalMessagesMoved; }}
 		public Queue<Common.Excuse> excuses;
+		public Queue<Common.WhiningTwine> whiningTwines;
 		public Queue<Common.Tick> ticks;
+		public bool shouldListen;
 
 		public Agent()
 		{
@@ -30,6 +34,8 @@ namespace BSvsMZP
 			agentInfo.remoteServerEndPoint = localEP;
 			excuses = new Queue<Common.Excuse>();
 			ticks = new Queue<Common.Tick>();
+			whiningTwines = new Queue<Common.WhiningTwine> ();
+			shouldListen = false;
 
 			// Making some dummy ticks for testing use
 			for (int i = 0; i < 1000; ++i) {
@@ -53,12 +59,19 @@ namespace BSvsMZP
 			return msg;
 		}
 
+		public Messages.GetResource makeGetWhiningTwineMessage (Common.Tick tick) {
+			Messages.GetResource msg = makeGetResourceMessage(Messages.GetResource.PossibleResourceType.WhiningTwine, tick);
+			return msg;
+		}
+
 		private Messages.GetResource makeGetResourceMessage(Messages.GetResource.PossibleResourceType type, Common.Tick tick) {
 			Messages.GetResource msg = new Messages.GetResource(agentInfo.gameID, type, tick);
 			msg.ConversationId = agentInfo.getNewConvoNum();
 			msg.MessageNr = msg.ConversationId;
 			return msg;
 		}
+
+
 	}
 }
 

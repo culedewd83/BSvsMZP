@@ -18,15 +18,24 @@
 @synthesize excuseRemoteAddress = _excuseRemoteAddress;
 @synthesize excuseRemotePort = _excuseRemotePort;
 @synthesize excuseSendMessageButton = _excuseSendMessageButton;
-@synthesize studentSendMessageButton = _studentSendMessageButton;
-@synthesize studentRemoteAddress = _studentRemoteAddress;
-@synthesize studentRemotePort = _studentRemotePort;
-@synthesize studentRemoteAddressButton = _studentRemoteAddressButton;
-@synthesize studentRemotePortButton = _studentRemotePortButton;
-@synthesize studentListenPortlbl = _studentListenPortlbl;
 @synthesize studentListenButton = _studentListenButton;
-@synthesize studentMessagesMovedlbl = _studentMessagesMovedlbl;
+@synthesize studentListenPortlbl = _studentListenPortlbl;
+@synthesize studentMessageBox = _studentMessageBox;
 @synthesize studentMessagesInQueuelbl = _studentMessagesInQueuelbl;
-
+@synthesize studentMessagesMovedlbl = _studentMessagesMovedlbl;
+@synthesize studentRemoteAddress = _studentRemoteAddress;
+@synthesize studentRemoteAddressButton = _studentRemoteAddressButton;
+@synthesize studentRemotePort = _studentRemotePort;
+@synthesize studentRemotePortButton = _studentRemotePortButton;
+@synthesize studentSendMessageButton = _studentSendMessageButton;
+@synthesize whineListenButton = _whineListenButton;
+@synthesize whineListeningPortlbl = _whineListeningPortlbl;
+@synthesize whineMessagesInQueuelbl = _whineMessagesInQueuelbl;
+@synthesize whineMessagesMovedlbl = _whineMessagesMovedlbl;
+@synthesize whineRemoteAddress = _whineRemoteAddress;
+@synthesize whineRemoteAddressButton = _whineRemoteAddressButton;
+@synthesize whineRemotePort = _whineRemotePort;
+@synthesize whineRemotePortButton = _whineRemotePortButton;
+@synthesize whineSendMessageButton = _whineSendMessageButton;
 
 @end
