@@ -4,37 +4,61 @@ namespace BSvsMZP
 {
 	public class AgentInfo
 	{
-		static readonly AgentInfo _instance = new AgentInfo();
-		private Object thisLock;
-		short convoNum;
-		public short processId { get; set; }
-		public short gameID { get; set; }
-		public string remoteServerAddress { get; set; }
-		public int remoteServerPort { get; set; }
+		private Object thisLock = new Object();
 
-
-		public static AgentInfo Instance
-		{
-			get
-			{
-				return _instance;
-			}
+		private short _convoNum;
+		public short convoNum {
+			get { lock (this.thisLock) {
+					this._convoNum = (short)(((int)this._convoNum % (int)short.MaxValue) + 1);
+					return this._convoNum; }}
+			set { lock (this.thisLock) { this._convoNum = value; }}
 		}
 
-		AgentInfo()
-		{
-			thisLock = new Object();
-			convoNum = 1;
-			processId = 123;
-			gameID = 555;
+		private short _processId;
+		public short processId {
+			get { lock (this.thisLock) { return this._processId; }}
+			set { lock (this.thisLock) { this._processId = value; }}
 		}
 
+		private short _gameID;
+		public short gameID {
+			get { lock (this.thisLock) { return this._gameID; }}
+			set { lock (this.thisLock) { this._gameID = value; }}
+		}
 
-		public short getConvoNum() {
-			lock (thisLock) {
-				convoNum = (short)(((int)convoNum % (int)short.MaxValue) + 1);
-				return convoNum;
-			}
+		private string _remoteServerAddress;
+		public string remoteServerAddress {
+			get { lock (this.thisLock) { return this._remoteServerAddress; }}
+			set { lock (this.thisLock) { this._remoteServerAddress = value; }}
+		}
+
+		private int _remoteServerPort;
+		public int remoteServerPort {
+			get { lock (this.thisLock) { return this._remoteServerPort; }}
+			set { lock (this.thisLock) { this._remoteServerPort = value; }}
+		}
+
+		private Common.EndPoint _remoteServerEndPoint;
+		public Common.EndPoint remoteServerEndPoint {
+			get { lock (this.thisLock) { return this._remoteServerEndPoint; }}
+			set { lock (this.thisLock) { this._remoteServerEndPoint = value; }}
+		}
+
+		public AgentInfo()
+		{
+			convoNum = 0;
+			processId = 0;
+			gameID = 0;
+			remoteServerAddress = "";
+			remoteServerPort = 0;
+			remoteServerEndPoint = new Common.EndPoint ();
+		}
+
+		public Common.MessageNumber getNewConvoNum () {
+			Common.MessageNumber msgNum = Common.MessageNumber.Create();
+			msgNum.ProcessId = processId;
+			msgNum.SeqNumber = convoNum;
+			return msgNum;
 		}
 	}
 }

@@ -108,6 +108,9 @@
     <Compile Include="MessageQueue.cs" />
     <Compile Include="ExcuseReplyDictionary.cs" />
     <Compile Include="Agent.cs" />
+    <Compile Include="ExcuseFactory.cs" />
+    <Compile Include="StudentDoer.cs" />
+    <Compile Include="BrilliantStudent.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

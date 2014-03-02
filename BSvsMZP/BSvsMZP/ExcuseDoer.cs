@@ -10,14 +10,16 @@ namespace BSvsMZP
 		private System.Threading.Thread doerThread;
 		private bool shouldListen;
 		ExcuseReplyDictionary replyDictionary;
+		AgentInfo agentInfo;
 
 
-		public ExcuseDoer(Communicator comm, MessageQueue msgQueue)
+		public ExcuseDoer(Communicator comm, MessageQueue msgQueue, AgentInfo agentInfo)
 		{
 			this.comm = comm;
 			this.msgQueue = msgQueue;
+			this.agentInfo = agentInfo;
 			shouldListen = false;
-			replyDictionary = new ExcuseReplyDictionary(comm, msgQueue);
+			replyDictionary = new ExcuseReplyDictionary(comm, msgQueue, agentInfo);
 		}
 
 
@@ -45,17 +47,15 @@ namespace BSvsMZP
 					for (int i = 0; i < stopAt; ++i) {
 						messagesMoved++;
 
-
-
-						//if (msgQueue.newConvoQueue[0].message. == Messages.Message.MESSAGE_CLASS_IDS.GetResource) {
+						if (msgQueue.newConvoQueue[0].message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.GetResource.ToString())) {
 							if ((msgQueue.newConvoQueue[0].message as Messages.GetResource).GetResourceType == Messages.GetResource.PossibleResourceType.Excuse){
 							Console.WriteLine((msgQueue.newConvoQueue[0].message as Messages.GetResource).GetResourceType.ToString());
 								if(replyDictionary.Strategies.ContainsKey((msgQueue.newConvoQueue[0].message as Messages.GetResource).GetResourceType.ToString())){
 								replyDictionary.Strategies[(msgQueue.newConvoQueue[0].message as Messages.GetResource).GetResourceType.ToString()].Invoke(msgQueue.newConvoQueue[0]);
-								Console.WriteLine("tried to reply");
+									Console.WriteLine("reply sent");
 								}
 							}
-						//}
+						}
 
 
 						msgQueue.newConvoQueue.RemoveAt(0);

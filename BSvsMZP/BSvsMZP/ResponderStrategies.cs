@@ -10,11 +10,11 @@ namespace BSvsMZP
 		AgentInfo agentInfo;
 
 
-		public ResponderStrategies(Communicator comm, MessageQueue msgQueue)
+		public ResponderStrategies(Communicator comm, MessageQueue msgQueue, AgentInfo agentInfo)
 		{
 			this.msgQueue = msgQueue;
 			this.comm = comm;
-			agentInfo = AgentInfo.Instance;
+			this.agentInfo = agentInfo;
 		}
 
 

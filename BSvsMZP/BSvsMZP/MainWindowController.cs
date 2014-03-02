@@ -13,6 +13,14 @@ namespace BSvsMZP
 	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
 	{
 
+		ExcuseFactory eFactory;
+		bool eFactoryShouldListen = false;
+
+		BrilliantStudent student;
+		bool studentShouldListen = false;
+
+
+
 		#region Constructors
 
 		// Called when created from unmanaged code
@@ -51,63 +59,80 @@ namespace BSvsMZP
 			base.AwakeFromNib();
 
 
-			Communicator comm = new Communicator();
-			comm.startListening();
-
-			Communicator comm2 = new Communicator();
-			comm2.startListening();
-
-			AgentInfo agentInfo = AgentInfo.Instance;
-			agentInfo.processId = 4445;
-
-			Common.EndPoint localEP = new Common.EndPoint ();
-			localEP.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
-			localEP.Port = comm.getPort();
-
-			Common.EndPoint localEP2 = new Common.EndPoint ();
-			localEP2.Address = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0);
-			localEP2.Port = comm2.getPort();
-
-
-			MessageQueue msgQue = new MessageQueue();
-			Listener listener = new Listener(comm, msgQue);
-			listener.startListening();
-
-			MessageQueue msgQue2 = new MessageQueue();
-			Listener listener2 = new Listener(comm2, msgQue2);
-			listener2.startListening();
-
-
-
-			ExcuseDoer doer = new ExcuseDoer (comm2, msgQue2);
-			doer.startListening();
+			eFactory = new ExcuseFactory ();
+			excuseRemoteAddress.StringValue = eFactory.agentInfo.remoteServerAddress;
+			excuseRemotePort.StringValue = "" + eFactory.agentInfo.remoteServerPort;
+			excuseListenPortlbl.StringValue = "Listening on port: " + eFactory.comm.getPort();
+			excuseAddressButton.Activated += (object sender, EventArgs e) => {
+				int oldPort = eFactory.agentInfo.remoteServerPort;
+				int newPort = 0;
+				int.TryParse(excuseRemotePort.StringValue, out newPort);
+				eFactory.setRemoteEndPoint(excuseRemoteAddress.StringValue, newPort);
+			};
+			excusePortButton.Activated += (object sender, EventArgs e) => {
+				int oldPort = eFactory.agentInfo.remoteServerPort;
+				int newPort = 0;
+				int.TryParse(excuseRemotePort.StringValue, out newPort);
+				eFactory.setRemoteEndPoint(excuseRemoteAddress.StringValue, newPort);
+			};
+			excuseListenButton.Activated += (object sender, EventArgs e) => {
+				if(!eFactoryShouldListen) {
+					eFactory.startListening();
+					excuseListenButton.Title = "Stop Listening";
+					eFactoryShouldListen = true;
+				} else {
+					eFactory.stopListening();
+					excuseListenButton.Title = "Start Listening";
+					eFactoryShouldListen = false;
+				}
+			};
 
 
-			InstigatorStrategies iStrats = new InstigatorStrategies (comm, msgQue);
-
-			Messages.GetResource getExcuseMsg = new Messages.GetResource (agentInfo.gameID, GetResource.PossibleResourceType.Excuse, new Common.Tick ());
-
-			getExcuseMsg.ConversationId = Common.MessageNumber.Create(); 
-
-			getExcuseMsg.ConversationId.ProcessId = agentInfo.processId;
-			getExcuseMsg.ConversationId.SeqNumber = agentInfo.getConvoNum();
 
 
-			getExcuseMsg.MessageNr.ProcessId = agentInfo.processId;
-			getExcuseMsg.MessageNr.SeqNumber = 1;
 
-			Envelope getExcuseEnv = new Envelope (getExcuseMsg, localEP2);
+			student = new BrilliantStudent ();
+			studentRemoteAddress.StringValue = student.agentInfo.remoteServerAddress;
+			studentRemotePort.StringValue = "" + student.agentInfo.remoteServerPort;
+			studentListenPortlbl.StringValue = "Listening on port: " + student.comm.getPort();
+			studentRemoteAddressButton.Activated += (object sender, EventArgs e) => {
+				int oldPort = student.agentInfo.remoteServerPort;
+				int newPort = 0;
+				int.TryParse(studentRemotePort.StringValue, out newPort);
+				student.setRemoteEndPoint(studentRemoteAddress.StringValue, newPort);
+			};
+			studentRemotePortButton.Activated += (object sender, EventArgs e) => {
+				int oldPort = student.agentInfo.remoteServerPort;
+				int newPort = 0;
+				int.TryParse(studentRemotePort.StringValue, out newPort);
+				student.setRemoteEndPoint(studentRemoteAddress.StringValue, newPort);
 
-			iStrats.getExcuse(getExcuseEnv, (excuse) => {
-				receiveExcuse(excuse);
+			};
+			studentListenButton.Activated += (object sender, EventArgs e) => {
+				if(!studentShouldListen) {
+					student.startListening();
+					studentListenButton.Title = "Stop Listening";
+					studentShouldListen = true;
+				} else {
+					student.stopListening();
+					studentListenButton.Title = "Start Listening";
+					studentShouldListen = false;
+				}
+			};
+			studentSendMessageButton.Activated += (object sender, EventArgs e) => {
+				student.getExcuse(student.agentInfo.remoteServerEndPoint);
+				Console.WriteLine("sent to port: " + student.agentInfo.remoteServerPort);
+			};
+
+
+			System.Threading.Thread updateWindowThread = new System.Threading.Thread(delegate(){
+				while(true) {
+					updateMainWindow();
+					System.Threading.Thread.Sleep(100);
+				}
 			});
-				
 
-
-
-			System.Threading.Thread.Sleep(5000);
-
-
+			updateWindowThread.Start();
 		}
 
 
@@ -115,6 +140,15 @@ namespace BSvsMZP
 		public void receiveExcuse(Common.Excuse excuse) {
 			Console.WriteLine("received an excuse");
 		}
+
+
+		public void updateMainWindow() {
+			InvokeOnMainThread(() => {
+				excuseMessagesMovedlbl.StringValue = "Messages moved: " + eFactory.MessagesMovedToQueue;
+				studentMessagesMovedlbl.StringValue = "Messages moved: " + student.MessagesMovedToQueue;
+			});
+		}
+
 
 	}
 }

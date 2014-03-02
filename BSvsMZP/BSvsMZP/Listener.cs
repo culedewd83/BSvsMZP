@@ -9,6 +9,7 @@ namespace BSvsMZP
 		private MessageQueue msgQueue;
 		private System.Threading.Thread listenerThread;
 		private bool shouldListen;
+		public long totalMessagesMoved;
 
 
 		public Listener(Communicator comm, MessageQueue msgQueue)
@@ -16,6 +17,7 @@ namespace BSvsMZP
 			this.comm = comm;
 			this.msgQueue = msgQueue;
 			shouldListen = false;
+			totalMessagesMoved = 0;
 		}
 
 
@@ -42,6 +44,7 @@ namespace BSvsMZP
 
 					foreach (Envelope envelope in receivedEnvelopes) {
 						messagesMoved++;
+						totalMessagesMoved++;
 						string convKey = "" + envelope.message.ConversationId.ProcessId + "," + envelope.message.ConversationId.SeqNumber;
 						if (msgQueue.convoInProgressQueue.ContainsKey(convKey)) {
 							msgQueue.convoInProgressQueue[convKey].Add(envelope);

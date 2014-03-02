@@ -9,12 +9,14 @@ namespace BSvsMZP
 		private ResponderStrategies strats;
 		MessageQueue msgQueue;
 		Communicator comm;
+		AgentInfo agentInfo;
 
-		public ExcuseReplyDictionary(Communicator comm, MessageQueue msgQueue)
+		public ExcuseReplyDictionary(Communicator comm, MessageQueue msgQueue, AgentInfo agentInfo)
 		{
 			this.msgQueue = msgQueue;
 			this.comm = comm;
-			strats = new ResponderStrategies (comm, msgQueue);
+			this.agentInfo = agentInfo;
+			strats = new ResponderStrategies (comm, msgQueue, agentInfo);
 
 			Strategies = new Dictionary<string, Action<Envelope>>();
 
