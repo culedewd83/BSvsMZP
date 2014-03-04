@@ -7,10 +7,10 @@ namespace BSvsMZP
 {
 	public class Communicator
 	{
-		private bool shouldListen;
-		private UdpClient udpServer;
-		private System.Threading.Thread listenerThread;
-		private List<Envelope> envelopeBuffer;
+		public bool shouldListen;
+		public UdpClient udpServer;
+		public System.Threading.Thread listenerThread;
+		public List<Envelope> envelopeBuffer;
 		private Object thisLock = new Object();
 
 

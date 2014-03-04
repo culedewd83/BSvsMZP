@@ -5,10 +5,10 @@ namespace BSvsMZP
 {
 	public class Listener
 	{
-		private Communicator comm;
-		private MessageQueue msgQueue;
-		private System.Threading.Thread listenerThread;
-		private bool shouldListen;
+		public Communicator comm;
+		public MessageQueue msgQueue;
+		public System.Threading.Thread listenerThread;
+		public bool shouldListen;
 		public long totalMessagesMoved;
 
 

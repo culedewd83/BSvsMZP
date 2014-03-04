@@ -1,21 +1,27 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/1/2014 4:52:24 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/4/2014 3:45:14 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BSvsMZP/InstigatorStrategies.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UnitTesting/Test.cs">
     <Files>
-      <File FileName="BSvsMZP/Main.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/MainWindow.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/MainWindowController.cs" Line="83" Column="73" />
-      <File FileName="BSvsMZP/Info.plist" />
-      <File FileName="BSvsMZP/Communicator.cs" Line="156" Column="43" />
-      <File FileName="BSvsMZP/Listener.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/MessageQueue.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/MessagesLists.cs" Line="1" Column="1" />
-      <File FileName="../../../../../../Downloads/BSvZP/Messages/Message.cs" Line="1" Column="1" />
-      <File FileName="../../../../../../Downloads/BSvZP/Messages/Reply.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/InstigatorStrategies.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/ResponderStrategies.cs" Line="31" Column="5" />
-      <File FileName="BSvsMZP/Doer.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/MainWindowController.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/InstigatorStrategies.cs" Line="4" Column="18" />
+      <File FileName="BSvsMZP/ResponderStrategies.cs" Line="1" Column="1" />
       <File FileName="BSvsMZP/ExcuseDoer.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/Communicator.cs" Line="59" Column="1" />
+      <File FileName="BSvsMZP/Envelope.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/MessageQueue.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/AgentInfo.cs" Line="1" Column="1" />
+      <File FileName="../../../../../../Downloads/BSvZP 3/Common/MessageNumber.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/Listener.cs" Line="1" Column="1" />
+      <File FileName="../../../../../../Downloads/BSvZP 3/Common/Excuse.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/ExcuseReplyDictionary.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/ExcuseFactory.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/StudentDoer.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/BrilliantStudent.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/Agent.cs" Line="1" Column="1" />
+      <File FileName="../../../../../../Downloads/BSvZP 3/Messages/Message.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/WhiningDoer.cs" Line="1" Column="1" />
+      <File FileName="BSvsMZP/WhineFactory.cs" Line="1" Column="1" />
+      <File FileName="UnitTesting/Test.cs" Line="18" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
