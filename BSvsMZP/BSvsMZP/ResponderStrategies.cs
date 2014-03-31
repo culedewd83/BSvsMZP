@@ -26,7 +26,7 @@ namespace BSvsMZP
 				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
 				Messages.GetResource receivedMsg = receivedEnvelope.message as Messages.GetResource;
 				Common.Excuse excuse = getExcuse(receivedMsg.EnablingTick);
-				Messages.AckNak replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, (excuse as Common.DistributableObject));
+				Messages.AckNak replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, excuse);
 				replyMsg.ConversationId = Common.MessageNumber.Create();
 				replyMsg.ConversationId.ProcessId = receivedMsg.ConversationId.ProcessId;
 				replyMsg.ConversationId.SeqNumber = receivedMsg.ConversationId.SeqNumber;
@@ -47,7 +47,7 @@ namespace BSvsMZP
 				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
 				Messages.GetResource receivedMsg = receivedEnvelope.message as Messages.GetResource;
 				Common.WhiningTwine whiningTwine = getWhiningTwine(receivedMsg.EnablingTick);
-				Messages.AckNak replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, (whiningTwine as Common.DistributableObject));
+				Messages.AckNak replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, whiningTwine);
 				replyMsg.ConversationId = Common.MessageNumber.Create();
 				replyMsg.ConversationId.ProcessId = receivedMsg.ConversationId.ProcessId;
 				replyMsg.ConversationId.SeqNumber = receivedMsg.ConversationId.SeqNumber;

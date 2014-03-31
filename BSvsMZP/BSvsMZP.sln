@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSvsMZP", "BSvsMZP\BSvsMZP.csproj", "{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "UnitTesting\UnitTesting.csproj", "{97C730DB-ADD0-487A-905E-ED692158CF52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware", "Middleware\Middleware.csproj", "{C9F25CD8-986E-40BB-9401-6943358488EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrilliantStudentAgent", "BrilliantStudentAgent\BrilliantStudentAgent.csproj", "{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcuseAgent", "ExcuseAgent\ExcuseAgent.csproj", "{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhineAgent", "WhineAgent\WhineAgent.csproj", "{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,20 +18,38 @@ Global
 		AppStore|Any CPU = AppStore|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}.AppStore|Any CPU.ActiveCfg = AppStore|Any CPU
-		{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}.AppStore|Any CPU.Build.0 = AppStore|Any CPU
-		{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}.AppStore|Any CPU.ActiveCfg = AppStore|Any CPU
+		{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}.AppStore|Any CPU.Build.0 = AppStore|Any CPU
+		{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2327E91B-B7E0-4F46-BE9A-05B9E4BABC82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97C730DB-ADD0-487A-905E-ED692158CF52}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
 		{97C730DB-ADD0-487A-905E-ED692158CF52}.AppStore|Any CPU.Build.0 = Release|Any CPU
 		{97C730DB-ADD0-487A-905E-ED692158CF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97C730DB-ADD0-487A-905E-ED692158CF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97C730DB-ADD0-487A-905E-ED692158CF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97C730DB-ADD0-487A-905E-ED692158CF52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}.AppStore|Any CPU.ActiveCfg = AppStore|Any CPU
+		{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}.AppStore|Any CPU.Build.0 = AppStore|Any CPU
+		{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE5A8AA-DD1C-45BE-8689-7A52C0C9A271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9F25CD8-986E-40BB-9401-6943358488EF}.AppStore|Any CPU.ActiveCfg = AppStore|Any CPU
+		{C9F25CD8-986E-40BB-9401-6943358488EF}.AppStore|Any CPU.Build.0 = AppStore|Any CPU
+		{C9F25CD8-986E-40BB-9401-6943358488EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9F25CD8-986E-40BB-9401-6943358488EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9F25CD8-986E-40BB-9401-6943358488EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9F25CD8-986E-40BB-9401-6943358488EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}.AppStore|Any CPU.ActiveCfg = AppStore|Any CPU
+		{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}.AppStore|Any CPU.Build.0 = AppStore|Any CPU
+		{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = BSvsMZP\BSvsMZP.csproj
+		StartupItem = BrilliantStudentAgent\BrilliantStudentAgent.csproj
 	EndGlobalSection
 EndGlobal

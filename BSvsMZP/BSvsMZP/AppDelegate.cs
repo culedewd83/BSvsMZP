@@ -9,6 +9,7 @@ namespace BSvsMZP
 	public partial class AppDelegate : NSApplicationDelegate
 	{
 		MainWindowController mainWindowController;
+		public SampleWindowController sample;
 
 		public AppDelegate()
 		{
@@ -17,7 +18,10 @@ namespace BSvsMZP
 		public override void FinishedLaunching (NSObject notification)
 		{
 			mainWindowController = new MainWindowController ();
+			//mainWindowController.ShowWindow(this);
 			mainWindowController.Window.MakeKeyAndOrderFront(this);
+			//sample = new SampleWindowController ();
+			//sample.Window.MakeKeyAndOrderFront(this);
 		}
 	}
 }

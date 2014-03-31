@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s0="http://tempuri.org/" xmlns:tns="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="RegisterGame">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="label" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="publicEP" type="tns:EndPoint" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="EndPoint">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:DistributableObject">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="Address" type="xs:int" />
+              <xs:element minOccurs="1" maxOccurs="1" name="Port" type="xs:int" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="DistributableObject" />
+      <xs:complexType name="ComponentInfo">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:DistributableObject">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="Id" type="xs:short" />
+              <xs:element minOccurs="0" maxOccurs="1" name="CommunicationEndPoint" type="tns:EndPoint" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GameInfo">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ComponentInfo">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Label" type="xs:string" />
+              <xs:element minOccurs="1" maxOccurs="1" name="Status" type="tns:GameStatus" />
+              <xs:element minOccurs="1" maxOccurs="1" name="AliveTimestamp" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:simpleType name="GameStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NOT_INITIAlIZED" />
+          <xs:enumeration value="AVAILABLE" />
+          <xs:enumeration value="RUNNING" />
+          <xs:enumeration value="COMPLETED" />
+          <xs:enumeration value="DEAD" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="RegisterGameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="RegisterGameResult" type="tns:GameInfo" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGames">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="status" type="tns:GameStatus" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGamesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetGamesResult" type="tns:ArrayOfGameInfo" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfGameInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="GameInfo" nillable="true" type="tns:GameInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetGamesAlt">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="status" type="tns:GameStatus" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGamesAltResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetGamesAltResult" type="tns:ArrayOfGameInfoAlt" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfGameInfoAlt">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="GameInfoAlt" nillable="true" type="tns:GameInfoAlt" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GameInfoAlt">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Id" type="xs:short" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CommunicationEndPoint" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Label" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Status" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AliveTimestamp" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AmAlive">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="gameId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AmAliveResponse">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="ChangeStatus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="gameId" type="xs:int" />
+            <xs:element minOccurs="1" maxOccurs="1" name="status" type="tns:GameStatus" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ChangeStatusResponse">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="EndPointReflector">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="EndPointReflectorResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="EndPointReflectorResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="RegisterGameSoapIn">
+    <part name="parameters" element="tns:RegisterGame" />
+  </message>
+  <message name="RegisterGameSoapOut">
+    <part name="parameters" element="tns:RegisterGameResponse" />
+  </message>
+  <message name="GetGamesSoapIn">
+    <part name="parameters" element="tns:GetGames" />
+  </message>
+  <message name="GetGamesSoapOut">
+    <part name="parameters" element="tns:GetGamesResponse" />
+  </message>
+  <message name="GetGamesAltSoapIn">
+    <part name="parameters" element="tns:GetGamesAlt" />
+  </message>
+  <message name="GetGamesAltSoapOut">
+    <part name="parameters" element="tns:GetGamesAltResponse" />
+  </message>
+  <message name="AmAliveSoapIn">
+    <part name="parameters" element="tns:AmAlive" />
+  </message>
+  <message name="AmAliveSoapOut">
+    <part name="parameters" element="tns:AmAliveResponse" />
+  </message>
+  <message name="ChangeStatusSoapIn">
+    <part name="parameters" element="tns:ChangeStatus" />
+  </message>
+  <message name="ChangeStatusSoapOut">
+    <part name="parameters" element="tns:ChangeStatusResponse" />
+  </message>
+  <message name="EndPointReflectorSoapIn">
+    <part name="parameters" element="tns:EndPointReflector" />
+  </message>
+  <message name="EndPointReflectorSoapOut">
+    <part name="parameters" element="tns:EndPointReflectorResponse" />
+  </message>
+  <portType name="RegistrarAltSoap">
+    <operation name="RegisterGame">
+      <input message="tns:RegisterGameSoapIn" />
+      <output message="tns:RegisterGameSoapOut" />
+    </operation>
+    <operation name="GetGames">
+      <input message="tns:GetGamesSoapIn" />
+      <output message="tns:GetGamesSoapOut" />
+    </operation>
+    <operation name="GetGamesAlt">
+      <input message="tns:GetGamesAltSoapIn" />
+      <output message="tns:GetGamesAltSoapOut" />
+    </operation>
+    <operation name="AmAlive">
+      <input message="tns:AmAliveSoapIn" />
+      <output message="tns:AmAliveSoapOut" />
+    </operation>
+    <operation name="ChangeStatus">
+      <input message="tns:ChangeStatusSoapIn" />
+      <output message="tns:ChangeStatusSoapOut" />
+    </operation>
+    <operation name="EndPointReflector">
+      <input message="tns:EndPointReflectorSoapIn" />
+      <output message="tns:EndPointReflectorSoapOut" />
+    </operation>
+  </portType>
+  <binding name="RegistrarAltSoap" type="tns:RegistrarAltSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="RegisterGame">
+      <soap:operation soapAction="http://tempuri.org/RegisterGame" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGames">
+      <soap:operation soapAction="http://tempuri.org/GetGames" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGamesAlt">
+      <soap:operation soapAction="http://tempuri.org/GetGamesAlt" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AmAlive">
+      <soap:operation soapAction="http://tempuri.org/AmAlive" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ChangeStatus">
+      <soap:operation soapAction="http://tempuri.org/ChangeStatus" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="EndPointReflector">
+      <soap:operation soapAction="http://tempuri.org/EndPointReflector" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="RegistrarAltSoap12" type="tns:RegistrarAltSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="RegisterGame">
+      <soap12:operation soapAction="http://tempuri.org/RegisterGame" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGames">
+      <soap12:operation soapAction="http://tempuri.org/GetGames" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGamesAlt">
+      <soap12:operation soapAction="http://tempuri.org/GetGamesAlt" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AmAlive">
+      <soap12:operation soapAction="http://tempuri.org/AmAlive" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ChangeStatus">
+      <soap12:operation soapAction="http://tempuri.org/ChangeStatus" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="EndPointReflector">
+      <soap12:operation soapAction="http://tempuri.org/EndPointReflector" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="RegistrarAlt">
+    <port name="RegistrarAltSoap" binding="tns:RegistrarAltSoap">
+      <soap:address location="http://cs5200web.serv.usu.edu/RegistrarAlt.asmx" />
+    </port>
+    <port name="RegistrarAltSoap12" binding="tns:RegistrarAltSoap12">
+      <soap12:address location="http://cs5200web.serv.usu.edu/RegistrarAlt.asmx" />
+    </port>
+  </service>
+</definitions>

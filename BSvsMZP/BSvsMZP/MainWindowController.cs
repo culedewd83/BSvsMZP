@@ -7,6 +7,7 @@ using Messages;
 using Common;
 using System.Net;
 using System.Collections;
+using System.ServiceModel;
 
 namespace BSvsMZP
 {
@@ -22,6 +23,7 @@ namespace BSvsMZP
 		BrilliantStudent student;
 		bool studentShouldListen = false;
 
+		SampleWindowController sample;
 
 
 		#region Constructors
@@ -61,6 +63,10 @@ namespace BSvsMZP
 		{
 			base.AwakeFromNib();
 
+			RegistrarAlt.RegistrarAlt registrar = new BSvsMZP.RegistrarAlt.RegistrarAlt ("http://bsvszp.azurewebsites.net/RegistrarAlt.asmx");
+			//RegistrarAlt.RegistrarAlt registrar = new BSvsMZP.RegistrarAlt.RegistrarAlt ("http://cs5200web.serv.usu.edu/RegistrarAlt.asmx");
+			var gamesAvail = registrar.GetGames(BSvsMZP.RegistrarAlt.GameStatus.AVAILABLE);
+			//var gamesAvail = registrar.GetGamesAlt(BSvsMZP.RegistrarAlt.GameStatus.AVAILABLE);
 
 			eFactory = new ExcuseFactory ();
 
@@ -182,6 +188,14 @@ namespace BSvsMZP
 			});
 
 			updateWindowThread.Start();
+
+
+
+			sample = new SampleWindowController ();
+			//sample.ShowWindow(this);
+			//sample.Window.OrderFront(this);
+			//this.Window.CanHide = true;
+			//this.Window.IsVisible = false;
 		}
 
 

@@ -79,6 +79,15 @@
     <Reference Include="nunit.framework">
       <HintPath>dlls\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="AgentCommon">
+      <HintPath>dlls\AgentCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="GameRegistry">
+      <HintPath>dlls\GameRegistry.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -87,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.cs" />
-    <Compile Include="MainWindowController.cs" />
     <Compile Include="MainWindow.designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
@@ -112,10 +120,20 @@
     <Compile Include="BrilliantStudent.cs" />
     <Compile Include="WhiningDoer.cs" />
     <Compile Include="WhineFactory.cs" />
+    <Compile Include="Web References\RegistrarAlt\Reference.cs">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowController.cs" />
+    <Compile Include="SampleWindow.cs" />
+    <Compile Include="SampleWindowController.cs" />
+    <Compile Include="SampleWindow.designer.cs">
+      <DependentUpon>SampleWindow.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
     <InterfaceDefinition Include="MainMenu.xib" />
+    <InterfaceDefinition Include="SampleWindow.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -123,6 +141,22 @@
     <None Include="dlls\log4net.dll" />
     <None Include="dlls\nunit.framework.dll" />
     <None Include="dlls\Messages.dll" />
+    <None Include="Web References\RegistrarAlt\RegistrarAlt.disco" />
+    <None Include="Web References\RegistrarAlt\RegistrarAlt.wsdl" />
+    <None Include="Web References\RegistrarAlt\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://cs5200web.serv.usu.edu/RegistrarAlt.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RegistrarAlt</RelPath>
+      <UpdateFromURL>http://cs5200web.serv.usu.edu/RegistrarAlt.asmx</UpdateFromURL>
+    </WebReferenceUrl>
+  </ItemGroup>
 </Project>

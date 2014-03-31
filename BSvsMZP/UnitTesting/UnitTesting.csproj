@@ -45,10 +45,4 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\BSvsMZP\BSvsMZP.csproj">
-      <Project>{58E8B1C5-85A3-436B-A9AE-575A6B88A07E}</Project>
-      <Name>BSvsMZP</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
