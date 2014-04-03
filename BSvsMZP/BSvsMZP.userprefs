@@ -3,8 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs">
     <Files>
       <File FileName="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs" Line="19" Column="1" />
-      <File FileName="UnitTesting/Test.cs" Line="80" Column="4" />
-      <File FileName="Middleware/Source/TestCommunicator.cs" Line="67" Column="39" />
+      <File FileName="UnitTesting/Test.cs" Line="1" Column="1" />
+      <File FileName="Middleware/Source/TestCommunicator.cs" Line="1" Column="1" />
       <File FileName="ExcuseAgent/Source/Agent/ExcuseAgent.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/GameServers.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/Communicator.cs" Line="1" Column="1" />
