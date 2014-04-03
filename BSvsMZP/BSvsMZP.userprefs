@@ -1,21 +1,26 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="4/3/2014 1:44:19 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="4/3/2014 4:20:19 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UnitTesting/Test.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Middleware/Source/BrilliantStudent.cs">
     <Files>
-      <File FileName="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs" Line="7" Column="3" />
+      <File FileName="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs" Line="35" Column="16" />
+      <File FileName="UnitTesting/Test.cs" Line="39" Column="38" />
+      <File FileName="Middleware/Source/TestCommunicator.cs" Line="85" Column="4" />
       <File FileName="ExcuseAgent/Source/Agent/ExcuseAgent.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/GameServers.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/Communicator.cs" Line="8" Column="27" />
+      <File FileName="Middleware/Source/Communicator.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/InstigatorStrategies.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/TestCommunicator.cs" Line="85" Column="4" />
-      <File FileName="Middleware/Source/Listener.cs" Line="1" Column="1" />
-      <File FileName="UnitTesting/Test.cs" Line="23" Column="6" />
-      <File FileName="Middleware/Source/BrilliantStudent.cs" Line="18" Column="6" />
-      <File FileName="Middleware/Source/Agent.cs" Line="11" Column="3" />
+      <File FileName="Middleware/Source/Listener.cs" Line="27" Column="1" />
+      <File FileName="Middleware/Source/BrilliantStudent.cs" Line="61" Column="21" />
+      <File FileName="Middleware/Source/Agent.cs" Line="75" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/jesse.rogers/Dropbox/School/Spring_2014/CS5200/BSvsMZP/BSvsMZP/Middleware/Source/TestCommunicator.cs" line="37" column="1" />
+      <Breakpoint file="/Users/jesse.rogers/Dropbox/School/Spring_2014/CS5200/BSvsMZP/BSvsMZP/Middleware/Source/TestCommunicator.cs" line="46" column="1" />
+      <Breakpoint file="/Users/jesse.rogers/Dropbox/School/Spring_2014/CS5200/BSvsMZP/BSvsMZP/Middleware/Source/BrilliantStudent.cs" line="60" column="1" />
+      <Breakpoint file="/Users/jesse.rogers/Dropbox/School/Spring_2014/CS5200/BSvsMZP/BSvsMZP/Middleware/Source/BrilliantStudent.cs" line="62" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

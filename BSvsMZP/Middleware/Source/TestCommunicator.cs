@@ -62,6 +62,9 @@ namespace Middleware
 							aInfo.Strength = 100;
 							aInfo.Speed = .25;
 							Messages.AckNak reply = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, aInfo);
+							reply.ConversationId = joinMsg.ConversationId;
+							reply.MessageNr = joinMsg.MessageNr;
+							reply.MessageNr.SeqNumber += 1;
 							Envelope replyEnvelope = new Envelope(reply, msgEP);
 							sendEnvelope(replyEnvelope);
 						}

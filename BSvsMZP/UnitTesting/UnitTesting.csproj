@@ -30,15 +30,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework" />
+    <Reference Include="nunit.framework">
+      <HintPath>DLLs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="Common">
-      <HintPath>..\BSvsMZP\dlls\Common.dll</HintPath>
+      <HintPath>DLLs\Common.dll</HintPath>
     </Reference>
     <Reference Include="Messages">
-      <HintPath>..\BSvsMZP\dlls\Messages.dll</HintPath>
+      <HintPath>DLLs\Messages.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\BSvsMZP\dlls\log4net.dll</HintPath>
+      <HintPath>DLLs\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="AgentCommon">
+      <HintPath>DLLs\AgentCommon.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -54,5 +59,15 @@
       <Project>{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}</Project>
       <Name>BrilliantStudentAgent</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DLLs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DLLs\AgentCommon.dll" />
+    <None Include="DLLs\Common.dll" />
+    <None Include="DLLs\log4net.dll" />
+    <None Include="DLLs\Messages.dll" />
+    <None Include="DLLs\nunit.framework.dll" />
   </ItemGroup>
 </Project>
