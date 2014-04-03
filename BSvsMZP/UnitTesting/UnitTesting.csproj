@@ -45,4 +45,14 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Middleware\Middleware.csproj">
+      <Project>{C9F25CD8-986E-40BB-9401-6943358488EF}</Project>
+      <Name>Middleware</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BrilliantStudentAgent\BrilliantStudentAgent.csproj">
+      <Project>{DE8B60A4-BDB4-4209-8FE3-CC73792EBBD9}</Project>
+      <Name>BrilliantStudentAgent</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

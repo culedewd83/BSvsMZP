@@ -1,15 +1,17 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/30/2014 9:40:32 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="4/3/2014 1:44:19 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Middleware/Source/GameServers.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UnitTesting/Test.cs">
     <Files>
+      <File FileName="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs" Line="7" Column="3" />
+      <File FileName="ExcuseAgent/Source/Agent/ExcuseAgent.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/GameServers.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/Agent.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/AgentInfo.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/SimpleServerInfo.cs" Line="1" Column="1" />
+      <File FileName="Middleware/Source/Communicator.cs" Line="8" Column="27" />
       <File FileName="Middleware/Source/InstigatorStrategies.cs" Line="1" Column="1" />
-      <File FileName="BSvsMZP/MainWindowController.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/BrilliantStudent.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/Envelope.cs" Line="1" Column="1" />
+      <File FileName="Middleware/Source/TestCommunicator.cs" Line="85" Column="4" />
+      <File FileName="Middleware/Source/Listener.cs" Line="1" Column="1" />
+      <File FileName="UnitTesting/Test.cs" Line="23" Column="6" />
+      <File FileName="Middleware/Source/BrilliantStudent.cs" Line="18" Column="6" />
+      <File FileName="Middleware/Source/Agent.cs" Line="11" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

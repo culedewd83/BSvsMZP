@@ -9,9 +9,17 @@ namespace ExcuseAgent
 		public Middleware.AgentInfo AgentInfo { get{ return  eAgent.agentInfo; }}
 		public int NumOfExcuses { get { return eAgent.excuses.Count; }}
 		public int NumOfTicks { get { return eAgent.ticks.Count; }}
+		System.Threading.Thread agentBrainThread;
 
 		public ExcuseAgent()
 		{
+			agentBrainThread = new System.Threading.Thread(delegate(){
+				while(true) {
+					UpdateAgent();
+					System.Threading.Thread.Sleep(5);
+				}
+			});
+			agentBrainThread.Start();
 		}
 
 		public void SetGameServer(SimpleServerInfo server)
@@ -45,6 +53,21 @@ namespace ExcuseAgent
 					timeoutCallback();
 				}
 			});
+		}
+
+		private void UpdateAgent ()
+		{
+			if (eAgent.ticks.Count > 0) {
+				createExcuse();
+			}
+		}
+
+		private void createExcuse ()
+		{
+			Common.Excuse excuse = new Common.Excuse ();
+			excuse.CreatorId = eAgent.agentInfo.processId;
+			excuse.Ticks.Add(eAgent.ticks.Dequeue());
+			eAgent.excuses.Enqueue(excuse);
 		}
 	}
 }

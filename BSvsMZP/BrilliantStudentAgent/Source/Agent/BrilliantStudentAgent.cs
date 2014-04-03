@@ -5,7 +5,7 @@ namespace BrilliantStudentAgent
 {
 	public class BrilliantStudentAgent
 	{
-		private BrilliantStudent bsAgent = new BrilliantStudent();
+		public BrilliantStudent bsAgent = new BrilliantStudent();
 		public Middleware.AgentInfo AgentInfo { get{ return  bsAgent.agentInfo; }}
 		public int NumOfExcuses { get { return bsAgent.excuses.Count; }}
 		public int NumOfTicks { get { return bsAgent.ticks.Count; }}

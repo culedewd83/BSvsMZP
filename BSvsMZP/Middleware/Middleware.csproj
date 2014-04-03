@@ -11,6 +11,7 @@
     <RootNamespace>Middleware</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <AssemblyName>Middleware</AssemblyName>
+    <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -124,6 +125,7 @@
     </Compile>
     <Compile Include="Source\SimpleServerInfo.cs" />
     <Compile Include="Source\ReplyDictionary.cs" />
+    <Compile Include="Source\TestCommunicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Info.plist" />

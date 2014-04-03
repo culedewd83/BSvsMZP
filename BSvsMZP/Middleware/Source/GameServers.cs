@@ -18,7 +18,9 @@ namespace Middleware
 				serverInfo.Port = server.CommunicationEndPoint.Port;
 				serverInfo.Id = server.Id;
 				serverInfo.EndPoint = new Common.EndPoint (server.CommunicationEndPoint.Address, server.CommunicationEndPoint.Port);
-				games.Add(server.Label, serverInfo);
+				if (!games.ContainsKey(server.Label)) {
+					games.Add(server.Label, serverInfo);
+				}
 			}
 
 			return games;

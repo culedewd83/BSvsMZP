@@ -18,12 +18,14 @@ namespace Middleware
 			comm.startListening();
 			listener.startListening();
 			doer.startListening();
+			shouldListen = true;
 		}
 
 		public void stopListening() {
 			comm.stopListening();
 			listener.stopListening();
 			doer.stopListening();
+			shouldListen = true;
 		}
 
 		public void JoinGame(Common.EndPoint ep, Action<string> errorCallback, Action timeoutCallback) {

@@ -16,12 +16,14 @@ namespace Middleware
 
 
 		public void startListening() {
+			shouldListen = true;
 			comm.startListening();
 			listener.startListening();
 			doer.startListening();
 		}
 
 		public void stopListening() {
+			shouldListen = false;
 			comm.stopListening();
 			listener.stopListening();
 			doer.stopListening();
