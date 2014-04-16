@@ -7,7 +7,7 @@ namespace Middleware
 	{
 
 		public List<Messages.Request> Request;						// 100
-		public List<Messages.GameAnnouncement> GameAnnouncement; 	// 101
+		//public List<Messages.GameAnnouncement> GameAnnouncement; 	// 101
 		public List<Messages.JoinGame> JoinGame;					// 102
 		public List<Messages.AddComponent> AddComponent;			// 103
 		public List<Messages.RemoveComponent> RemoveComponent;		// 104
@@ -28,7 +28,7 @@ namespace Middleware
 		public MessagesLists()
 		{
 			Request = new List<Messages.Request>();
-			GameAnnouncement = new List<Messages.GameAnnouncement>();
+			//GameAnnouncement = new List<Messages.GameAnnouncement>();
 			JoinGame = new List<Messages.JoinGame>();
 			AddComponent = new List<Messages.AddComponent>();
 			RemoveComponent = new List<Messages.RemoveComponent>();

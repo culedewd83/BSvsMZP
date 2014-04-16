@@ -2,6 +2,16 @@
 <definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s0="http://tempuri.org/" xmlns:tns="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="GetProcessId">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="GetProcessIdResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="GetProcessIdResult" type="xs:short" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="RegisterGame">
         <xs:complexType>
           <xs:sequence>
@@ -46,7 +56,9 @@
         <xs:restriction base="xs:string">
           <xs:enumeration value="NOT_INITIAlIZED" />
           <xs:enumeration value="AVAILABLE" />
+          <xs:enumeration value="STARTING" />
           <xs:enumeration value="RUNNING" />
+          <xs:enumeration value="STOPPING" />
           <xs:enumeration value="COMPLETED" />
           <xs:enumeration value="DEAD" />
         </xs:restriction>
@@ -138,6 +150,12 @@
       </xs:element>
     </xs:schema>
   </types>
+  <message name="GetProcessIdSoapIn">
+    <part name="parameters" element="tns:GetProcessId" />
+  </message>
+  <message name="GetProcessIdSoapOut">
+    <part name="parameters" element="tns:GetProcessIdResponse" />
+  </message>
   <message name="RegisterGameSoapIn">
     <part name="parameters" element="tns:RegisterGame" />
   </message>
@@ -175,6 +193,10 @@
     <part name="parameters" element="tns:EndPointReflectorResponse" />
   </message>
   <portType name="RegistrarAltSoap">
+    <operation name="GetProcessId">
+      <input message="tns:GetProcessIdSoapIn" />
+      <output message="tns:GetProcessIdSoapOut" />
+    </operation>
     <operation name="RegisterGame">
       <input message="tns:RegisterGameSoapIn" />
       <output message="tns:RegisterGameSoapOut" />
@@ -202,6 +224,15 @@
   </portType>
   <binding name="RegistrarAltSoap" type="tns:RegistrarAltSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetProcessId">
+      <soap:operation soapAction="http://tempuri.org/GetProcessId" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="RegisterGame">
       <soap:operation soapAction="http://tempuri.org/RegisterGame" style="document" />
       <input>
@@ -259,6 +290,15 @@
   </binding>
   <binding name="RegistrarAltSoap12" type="tns:RegistrarAltSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetProcessId">
+      <soap12:operation soapAction="http://tempuri.org/GetProcessId" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
     <operation name="RegisterGame">
       <soap12:operation soapAction="http://tempuri.org/RegisterGame" style="document" />
       <input>

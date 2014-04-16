@@ -68,7 +68,7 @@ namespace Middleware
 		private void ReceiveAgentInfo(Common.AgentInfo aInfo)
 		{
 			Console.WriteLine("AgentInfo received from game server");
-			agentInfo.processId = aInfo.Id;
+			//agentInfo.processId = aInfo.Id;
 			agentInfo.status = "Active";
 			agentInfo.CommonAgentInfo = aInfo;
 			agentInfo.gameStatus = "Joined, Not Started";

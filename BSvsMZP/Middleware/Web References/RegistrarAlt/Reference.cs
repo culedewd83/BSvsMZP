@@ -19,6 +19,8 @@ namespace Middleware.RegistrarAlt {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComponentInfo))]
     public partial class RegistrarAlt : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
+        private System.Threading.SendOrPostCallback GetProcessIdOperationCompleted;
+        
         private System.Threading.SendOrPostCallback RegisterGameOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetGamesOperationCompleted;
@@ -39,6 +41,8 @@ namespace Middleware.RegistrarAlt {
             this.Url = url;
         }
         
+        public event GetProcessIdCompletedEventHandler GetProcessIdCompleted;
+        
         public event RegisterGameCompletedEventHandler RegisterGameCompleted;
         
         public event GetGamesCompletedEventHandler GetGamesCompleted;
@@ -50,6 +54,39 @@ namespace Middleware.RegistrarAlt {
         public event ChangeStatusCompletedEventHandler ChangeStatusCompleted;
         
         public event EndPointReflectorCompletedEventHandler EndPointReflectorCompleted;
+        
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetProcessId", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
+        public short GetProcessId() {
+            object[] results = this.Invoke("GetProcessId", new object[0]);
+            return ((short)(results[0]));
+        }
+        
+        public System.IAsyncResult BeginGetProcessId(System.AsyncCallback callback, object asyncState) {
+            return this.BeginInvoke("GetProcessId", new object[0], callback, asyncState);
+        }
+        
+        public short EndGetProcessId(System.IAsyncResult asyncResult) {
+            object[] results = this.EndInvoke(asyncResult);
+            return ((short)(results[0]));
+        }
+        
+        public void GetProcessIdAsync() {
+            this.GetProcessIdAsync(null);
+        }
+        
+        public void GetProcessIdAsync(object userState) {
+            if ((this.GetProcessIdOperationCompleted == null)) {
+                this.GetProcessIdOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetProcessIdCompleted);
+            }
+            this.InvokeAsync("GetProcessId", new object[0], this.GetProcessIdOperationCompleted, userState);
+        }
+        
+        private void OnGetProcessIdCompleted(object arg) {
+            if ((this.GetProcessIdCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetProcessIdCompleted(this, new GetProcessIdCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
         
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RegisterGame", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
         public GameInfo RegisterGame(string label, EndPoint publicEP) {
@@ -341,7 +378,13 @@ namespace Middleware.RegistrarAlt {
         AVAILABLE,
         
         /// <remarks/>
+        STARTING,
+        
+        /// <remarks/>
         RUNNING,
+        
+        /// <remarks/>
+        STOPPING,
         
         /// <remarks/>
         COMPLETED,
@@ -373,6 +416,25 @@ namespace Middleware.RegistrarAlt {
         /// <remarks/>
         public string AliveTimestamp;
     }
+    
+    public partial class GetProcessIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetProcessIdCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public short Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((short)(this.results[0]));
+            }
+        }
+    }
+    
+    public delegate void GetProcessIdCompletedEventHandler(object sender, GetProcessIdCompletedEventArgs args);
     
     public partial class RegisterGameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         

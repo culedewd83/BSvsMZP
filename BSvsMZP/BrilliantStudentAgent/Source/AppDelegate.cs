@@ -18,6 +18,7 @@ namespace BrilliantStudentAgent
 
 		public override void FinishedLaunching (NSObject notification)
 		{
+			bsAgent.bsAgent.GetProcessID();
 			mainWindowController = new MainWindowController ();
 			mainWindowController.bsAgent = bsAgent;
 			mainWindowController.Window.MakeKeyAndOrderFront(this);

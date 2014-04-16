@@ -67,8 +67,8 @@ namespace Middleware
 
 		private Messages.GetResource makeGetResourceMessage(Messages.GetResource.PossibleResourceType type, Common.Tick tick) {
 			Messages.GetResource msg = new Messages.GetResource(agentInfo.gameID, type, tick);
-			msg.ConversationId = agentInfo.getNewConvoNum();
-			msg.MessageNr = msg.ConversationId;
+			//msg.ConversationId = agentInfo.getNewConvoNum();
+			//msg.MessageNr = msg.ConversationId;
 			return msg;
 		}
 
@@ -79,10 +79,17 @@ namespace Middleware
 			aInfo.ANumber = "A12345678";
 			aInfo.FirstName = "John";
 			aInfo.LastName = "Smith";
+			aInfo.Id = Common.MessageNumber.LocalProcessId;
 			Messages.JoinGame msg = new Messages.JoinGame (agentInfo.gameID, aInfo);
-			msg.ConversationId = agentInfo.getNewConvoNum();
-			msg.MessageNr = msg.ConversationId;
+			//msg.ConversationId = agentInfo.getNewConvoNum();
+			//msg.MessageNr = msg.ConversationId;
 			return msg;
+		}
+
+		public void GetProcessID ()
+		{
+			Common.MessageNumber.LocalProcessId = GameServers.GetProcessID();
+			agentInfo.processId = Common.MessageNumber.LocalProcessId;
 		}
 
 	}

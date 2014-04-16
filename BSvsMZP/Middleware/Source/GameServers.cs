@@ -26,6 +26,11 @@ namespace Middleware
 			return games;
 		}
 
+		public static short GetProcessID ()
+		{
+			RegistrarAlt.RegistrarAlt registrar = new RegistrarAlt.RegistrarAlt ("http://cs5200web.serv.usu.edu/RegistrarAlt.asmx");
+			return registrar.GetProcessId();
+		}
 
 	}
 }
