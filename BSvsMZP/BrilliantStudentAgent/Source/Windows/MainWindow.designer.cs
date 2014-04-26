@@ -13,6 +13,9 @@ namespace BrilliantStudentAgent
 	partial class MainWindowController
 	{
 		[Outlet]
+		MonoMac.AppKit.NSButton btnExit { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSButton btnJoinGame { get; set; }
 
 		[Outlet]
@@ -59,6 +62,11 @@ namespace BrilliantStudentAgent
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (btnExit != null) {
+				btnExit.Dispose ();
+				btnExit = null;
+			}
+
 			if (btnJoinGame != null) {
 				btnJoinGame.Dispose ();
 				btnJoinGame = null;
@@ -74,9 +82,9 @@ namespace BrilliantStudentAgent
 				gamesComboBox = null;
 			}
 
-			if (lblAgentStatus != null) {
-				lblAgentStatus.Dispose ();
-				lblAgentStatus = null;
+			if (lblAgentHealth != null) {
+				lblAgentHealth.Dispose ();
+				lblAgentHealth = null;
 			}
 
 			if (lblAgentID != null) {
@@ -84,24 +92,9 @@ namespace BrilliantStudentAgent
 				lblAgentID = null;
 			}
 
-			if (lblGameStatus != null) {
-				lblGameStatus.Dispose ();
-				lblGameStatus = null;
-			}
-
-			if (lblGameID != null) {
-				lblGameID.Dispose ();
-				lblGameID = null;
-			}
-
 			if (lblAgentLocation != null) {
 				lblAgentLocation.Dispose ();
 				lblAgentLocation = null;
-			}
-
-			if (lblAgentHealth != null) {
-				lblAgentHealth.Dispose ();
-				lblAgentHealth = null;
 			}
 
 			if (lblAgentSpeed != null) {
@@ -109,9 +102,34 @@ namespace BrilliantStudentAgent
 				lblAgentSpeed = null;
 			}
 
+			if (lblAgentStatus != null) {
+				lblAgentStatus.Dispose ();
+				lblAgentStatus = null;
+			}
+
 			if (lblAgentStrength != null) {
 				lblAgentStrength.Dispose ();
 				lblAgentStrength = null;
+			}
+
+			if (lblGameID != null) {
+				lblGameID.Dispose ();
+				lblGameID = null;
+			}
+
+			if (lblGameStatus != null) {
+				lblGameStatus.Dispose ();
+				lblGameStatus = null;
+			}
+
+			if (lblNumOfBombs != null) {
+				lblNumOfBombs.Dispose ();
+				lblNumOfBombs = null;
+			}
+
+			if (lblNumOfExcuses != null) {
+				lblNumOfExcuses.Dispose ();
+				lblNumOfExcuses = null;
 			}
 
 			if (lblNumOfTicks != null) {
@@ -122,16 +140,6 @@ namespace BrilliantStudentAgent
 			if (lblNumOfTwine != null) {
 				lblNumOfTwine.Dispose ();
 				lblNumOfTwine = null;
-			}
-
-			if (lblNumOfExcuses != null) {
-				lblNumOfExcuses.Dispose ();
-				lblNumOfExcuses = null;
-			}
-
-			if (lblNumOfBombs != null) {
-				lblNumOfBombs.Dispose ();
-				lblNumOfBombs = null;
 			}
 		}
 	}

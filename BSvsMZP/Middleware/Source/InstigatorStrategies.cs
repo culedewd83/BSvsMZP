@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Messages;
+using System.Collections.Concurrent;
 
 namespace Middleware
 {
@@ -20,22 +21,27 @@ namespace Middleware
 		{
 			System.Threading.Thread thread = new System.Threading.Thread (delegate() {
 				string convKey = "" + envelope.message.ConversationId.ProcessId + "," + envelope.message.ConversationId.SeqNumber;
-				msgQueue.convoInProgressQueue.Add(convKey, new Queue<Envelope>());
+				msgQueue.convoInProgressQueue.TryAdd(convKey, new ConcurrentQueue<Envelope>());
+				ConcurrentQueue<Envelope> disposed;
 				for (int i = 0; i < 3; ++i) {
 					comm.sendEnvelope(envelope);
-					Console.WriteLine("JoinGame message sent");
+					//Console.WriteLine("JoinGame message sent");
 					for (int j = 0; j < 500; ++j) {
 						if (msgQueue.convoInProgressQueue[convKey].Count > 0) {
-							Envelope reply = msgQueue.convoInProgressQueue[convKey].Dequeue();
-							msgQueue.convoInProgressQueue.Remove(convKey);
-							comm.sendEnvelope(new Envelope(new AckNak(Reply.PossibleStatus.Success), reply.endPoint));
-							callback(reply.message);
-							return;
+							Envelope reply;
+							if(msgQueue.convoInProgressQueue[convKey].TryDequeue(out reply)){
+								msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+								AckNak ackNak = new AckNak(Reply.PossibleStatus.Success);
+								ackNak.ConversationId = envelope.message.ConversationId;
+								comm.sendEnvelope(new Envelope(ackNak, reply.endPoint));
+								callback(reply.message);
+								return;
+							}
 						}
 						System.Threading.Thread.Sleep(5);
 					}
 				}
-				msgQueue.convoInProgressQueue.Remove(convKey);
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
 				timeoutCallback();
 			});
 			thread.Start();
@@ -72,60 +78,161 @@ namespace Middleware
 		{
 			System.Threading.Thread thread = new System.Threading.Thread (delegate() {
 				string convKey = "" + envelope.message.ConversationId.ProcessId + "," + envelope.message.ConversationId.SeqNumber;
-				msgQueue.convoInProgressQueue.Add(convKey, new Queue<Envelope>());
+				msgQueue.convoInProgressQueue.TryAdd(convKey, new ConcurrentQueue<Envelope>());
+				ConcurrentQueue<Envelope> disposed;
 				for (int i = 0; i < 3; ++i) {
 					comm.sendEnvelope(envelope);
-					Console.WriteLine("JoinGame message sent");
+					//Console.WriteLine("message sent");
 					for (int j = 0; j < 500; ++j) {
-						if (msgQueue.convoInProgressQueue[convKey].Count > 0) {
-							Envelope reply = msgQueue.convoInProgressQueue[convKey].Dequeue();
-							msgQueue.convoInProgressQueue.Remove(convKey);
-							callback(reply.message);
-							return;
+						if (msgQueue.convoInProgressQueue.ContainsKey(convKey) && msgQueue.convoInProgressQueue[convKey].Count > 0) {
+							Envelope reply;
+							if(msgQueue.convoInProgressQueue[convKey].TryDequeue(out reply)){
+								msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+								callback(reply.message);
+								return;
+							}
 						}
 						System.Threading.Thread.Sleep(5);
 					}
 				}
-				msgQueue.convoInProgressQueue.Remove(convKey);
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
 			});
 			thread.Start();
 		}
 
-		public void getExcuse (Envelope envelope, Action<Common.Excuse> callback)
+
+		public void SendReplyRecover (Envelope envelope, Action<Message> callback, Action<Envelope> recovery)
+		{
+			System.Threading.Thread thread = new System.Threading.Thread (delegate() {
+				string convKey = "" + envelope.message.ConversationId.ProcessId + "," + envelope.message.ConversationId.SeqNumber;
+				msgQueue.convoInProgressQueue.TryAdd(convKey, new ConcurrentQueue<Envelope>());
+				ConcurrentQueue<Envelope> disposed;
+				for (int i = 0; i < 3; ++i) {
+					comm.sendEnvelope(envelope);
+					//Console.WriteLine("message sent");
+					for (int j = 0; j < 500; ++j) {
+						if (msgQueue.convoInProgressQueue.ContainsKey(convKey) && msgQueue.convoInProgressQueue[convKey].Count > 0) {
+							Envelope reply;
+							if(msgQueue.convoInProgressQueue[convKey].TryDequeue(out reply)){
+								msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+								callback(reply.message);
+								return;
+							}
+						}
+						System.Threading.Thread.Sleep(5);
+					}
+				}
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+				recovery(envelope);
+			});
+			thread.Start();
+		}
+
+
+
+		public void GetAgentList (Envelope envelope, Action<Common.AgentList> callback)
 		{
 			SendReply(envelope, (msg) => {
-				GetExcuseReplyHandler(msg, callback);
+				GetAgentListHandler(msg, callback);
 			});
 		}
 
-		private void GetExcuseReplyHandler (Message msg, Action<Common.Excuse> callback)
+		private void GetAgentListHandler (Message msg, Action<Common.AgentList> callback)
 		{
 			try {
-				Messages.AckNak reply = msg as AckNak;
+				AgentListReply reply = msg as AgentListReply;
 				if (reply.Status == Reply.PossibleStatus.Success) {
-					callback((Common.Excuse)reply.ObjResult);
+					callback((Common.AgentList)reply.Agents);
 				}
 			} catch { }
 		}
 
 
-		public void getWhiningTwine (Envelope envelope, Action<Common.WhiningTwine> callback)
+		public void getExcuse (Envelope envelope, Action<Common.Excuse> callback, Action<Common.Tick> recovery)
 		{
-			SendReply(envelope, (msg) => {
-				GetWhineReplyHandler(msg, callback);
+			SendReplyRecover(envelope, (msg) => {
+				GetExcuseReplyHandler(msg, callback, envelope, recovery);
+			}, (env) => {
+				recovery(((Messages.GetResource)env.message).EnablingTick);
 			});
 		}
 
-		private void GetWhineReplyHandler (Message msg, Action<Common.Excuse> callback)
+		private void GetExcuseReplyHandler (Message msg, Action<Common.Excuse> callback, Envelope envelope, Action<Common.Tick> recovery)
 		{
 			try {
-				Messages.AckNak reply = msg as AckNak;
+				Messages.ResourceReply reply = msg as ResourceReply;
 				if (reply.Status == Reply.PossibleStatus.Success) {
-					callback((Common.WhiningTwine)reply.ObjResult);
+					Console.WriteLine("YAYAYAYAYAYAYAYAYAYAYAYAYAYAYYYYYYYYY!!!!");
+					callback((Common.Excuse)reply.Resource);
+				} else {
+					recovery(((Messages.GetResource)envelope.message).EnablingTick);
+				}
+			} catch {
+				Console.WriteLine("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+				recovery(((Messages.GetResource)envelope.message).EnablingTick);
+			}
+
+		}
+
+
+		public void getWhiningTwine (Envelope envelope, Action<Common.WhiningTwine> callback, Action<Common.Tick> recovery)
+		{
+			SendReplyRecover(envelope, (msg) => {
+				GetWhineReplyHandler(msg, callback, envelope, recovery);
+			}, (env) => {
+				recovery(((Messages.GetResource)env.message).EnablingTick);
+			});
+		}
+
+		private void GetWhineReplyHandler (Message msg, Action<Common.WhiningTwine> callback, Envelope envelope, Action<Common.Tick> recovery)
+		{
+			try {
+				Messages.ResourceReply reply = msg as ResourceReply;
+				if (reply.Status == Reply.PossibleStatus.Success) {
+					callback((Common.WhiningTwine)reply.Resource);
+				} else {
+					recovery(((Messages.GetResource)envelope.message).EnablingTick);
+				}
+			} catch {
+				recovery(((Messages.GetResource)envelope.message).EnablingTick);
+			}
+		}
+
+		public void StartUpdateStream (Envelope envelope, Action<bool> callback)
+		{
+			SendReply(envelope, (msg) => {
+				StartUpdateStreamReplyHandler(msg, callback);
+			});
+		}
+
+		private void StartUpdateStreamReplyHandler (Message msg, Action<bool> callback)
+		{
+			try {
+				AckNak reply = msg as AckNak;
+				if (reply.Status == Reply.PossibleStatus.Success) {
+					callback(true);
+				} else {
+					callback(false);
 				}
 			} catch { }
 		}
 
+		public void GetGameConfig (Envelope envelope, Action<Common.GameConfiguration> callback)
+		{
+			SendReply(envelope, (msg) => {
+				GetGameConfigReplyHandler(msg, callback);
+			});
+		}
+
+		private void GetGameConfigReplyHandler (Message msg, Action<Common.GameConfiguration> callback)
+		{
+			try {
+				ConfigurationReply reply = msg as ConfigurationReply;
+				if (reply.Status == Reply.PossibleStatus.Success) {
+					callback(reply.Configuration);
+				}
+			} catch { }
+		}
 
 //		public void getExcuse (Envelope envelope, Action<Common.Excuse> callback) {
 //			System.Threading.Thread thread = new System.Threading.Thread(delegate(){

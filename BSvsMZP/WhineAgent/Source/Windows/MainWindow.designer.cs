@@ -9,18 +9,12 @@ using System.CodeDom.Compiler;
 
 namespace WhineAgent
 {
-	[Register ("MainWindow")]
-	partial class MainWindow
-	{
-		
-		void ReleaseDesignerOutlets ()
-		{
-		}
-	}
-
 	[Register ("MainWindowController")]
 	partial class MainWindowController
 	{
+		[Outlet]
+		MonoMac.AppKit.NSButton btnExit { get; set; }
+
 		[Outlet]
 		MonoMac.AppKit.NSButton btnJoinGame { get; set; }
 
@@ -62,6 +56,11 @@ namespace WhineAgent
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (btnExit != null) {
+				btnExit.Dispose ();
+				btnExit = null;
+			}
+
 			if (btnJoinGame != null) {
 				btnJoinGame.Dispose ();
 				btnJoinGame = null;
@@ -126,6 +125,15 @@ namespace WhineAgent
 				lblNumOfTwine.Dispose ();
 				lblNumOfTwine = null;
 			}
+		}
+	}
+
+	[Register ("MainWindow")]
+	partial class MainWindow
+	{
+		
+		void ReleaseDesignerOutlets ()
+		{
 		}
 	}
 }

@@ -111,7 +111,6 @@
     <Compile Include="Source\Envelope.cs" />
     <Compile Include="Source\ExcuseDoer.cs" />
     <Compile Include="Source\ExcuseFactory.cs" />
-    <Compile Include="Source\InstigatorStrategies.cs" />
     <Compile Include="Source\Listener.cs" />
     <Compile Include="Source\MessageQueue.cs" />
     <Compile Include="Source\MessagesLists.cs" />
@@ -126,6 +125,8 @@
     <Compile Include="Source\SimpleServerInfo.cs" />
     <Compile Include="Source\ReplyDictionary.cs" />
     <Compile Include="Source\TestCommunicator.cs" />
+    <Compile Include="Source\RemoteAgent.cs" />
+    <Compile Include="Source\InstigatorStrategies.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Info.plist" />

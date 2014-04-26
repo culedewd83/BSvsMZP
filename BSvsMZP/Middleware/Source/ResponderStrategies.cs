@@ -1,4 +1,7 @@
 ﻿using System;
+using Messages;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Middleware
 {
@@ -26,11 +29,81 @@ namespace Middleware
 
 				agent.ticks.Enqueue(((Messages.TickDelivery)receivedEnvelope.message).CurrentTick);
 
-				msgQueue.convoInProgressQueue.Remove(convKey);
+				ConcurrentQueue<Envelope> disposed;
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+			});
+
+			thread.Start();
+		}
+
+		public void ReceiveAgentUpdateStream (Envelope receivedEnvelope) {
+			System.Threading.Thread thread = new System.Threading.Thread(delegate(){
+				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
+				foreach (Common.AgentInfo remoteAgent in ((Messages.AgentListReply)receivedEnvelope.message).Agents) {
+					if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.BrilliantStudent) {
+						if (agent.brillantAgents.ContainsKey(remoteAgent.Id)) {
+							agent.brillantAgents[remoteAgent.Id].agent = remoteAgent;
+						} else {
+							agent.brillantAgents.TryAdd(remoteAgent.Id, new RemoteAgent(remoteAgent));
+						}
+					} else if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.ExcuseGenerator) {
+						if (agent.excuseAgents.ContainsKey(remoteAgent.Id)) {
+							agent.excuseAgents[remoteAgent.Id].agent = remoteAgent;
+						} else {
+							agent.excuseAgents.TryAdd(remoteAgent.Id, new RemoteAgent(remoteAgent));
+						}
+					} else if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.WhiningSpinner) {
+						if (agent.whiningAgents.ContainsKey(remoteAgent.Id)) {
+							agent.whiningAgents[remoteAgent.Id].agent = remoteAgent;
+						} else {
+							agent.whiningAgents.TryAdd(remoteAgent.Id, new RemoteAgent(remoteAgent));
+						}
+					} else if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.ZombieProfessor) {
+						if (agent.zombieAgents.ContainsKey(remoteAgent.Id)) {
+							agent.zombieAgents[remoteAgent.Id].agent = remoteAgent;
+						} else {
+							agent.zombieAgents.TryAdd(remoteAgent.Id, new RemoteAgent(remoteAgent));
+						}
+					}
+				}
+				ConcurrentQueue<Envelope> disposed;
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+			});
+			thread.Start();
+		}
+
+		public void ReceiveEndGame (Envelope receivedEnvelope) {
+			System.Threading.Thread thread = new System.Threading.Thread(delegate(){
+
+				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
+
+				agent.GameHasEnded();
+
+				ConcurrentQueue<Envelope> disposed;
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
 
 			});
 
 			thread.Start();
+		}
+
+		public void ReceiveStartGame (Envelope receivedEnvelope) {
+			System.Threading.Thread thread = new System.Threading.Thread(delegate(){
+				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
+				msgQueue.convoInProgressQueue.TryAdd(convKey, new ConcurrentQueue <Envelope>());
+				ReadyReply readyReply = new ReadyReply(Reply.PossibleStatus.Success, "Good to go!");
+				readyReply.ConversationId = receivedEnvelope.message.ConversationId;
+				Envelope readyEnvelope = new Envelope(readyReply, receivedEnvelope.endPoint);
+				SendReply (readyEnvelope, (msg) => { StartGameAckNakHandler(msg); });
+
+			});
+
+			thread.Start();
+		}
+
+		private void StartGameAckNakHandler (Message msg)
+		{
+			agent.GameHasStarted();
 		}
 
 
@@ -40,27 +113,22 @@ namespace Middleware
 				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
 
 				Messages.GetResource receivedMsg = receivedEnvelope.message as Messages.GetResource;
-				Messages.AckNak replyMsg;
+				Messages.ResourceReply replyMsg;
+
 
 				if (agent.excuses.Count > 0) {
 					Common.Excuse excuse = getExcuse(receivedMsg.EnablingTick);
-					replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, excuse);
+					replyMsg = new Messages.ResourceReply(Messages.Reply.PossibleStatus.Success, excuse, "Here you go dawg");
 				} else {
-					replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Failure, 1, "Not enough excuses");
+					replyMsg = new Messages.ResourceReply(Messages.Reply.PossibleStatus.Failure, null, "Not enough excuses");
 				}
 
-				replyMsg.ConversationId = Common.MessageNumber.Create();
-				replyMsg.ConversationId.ProcessId = receivedMsg.ConversationId.ProcessId;
-				replyMsg.ConversationId.SeqNumber = receivedMsg.ConversationId.SeqNumber;
-				replyMsg.MessageNr.ProcessId = agentInfo.processId;
-				replyMsg.MessageNr.SeqNumber = (short)(receivedMsg.MessageNr.SeqNumber + 1);
+				replyMsg.ConversationId = receivedMsg.ConversationId;
 				Envelope replyEnv = new Envelope(replyMsg, receivedEnvelope.endPoint);
 				comm.sendEnvelope(replyEnv);
-
-				msgQueue.convoInProgressQueue.Remove(convKey);
-
+				ConcurrentQueue<Envelope> disposed;
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
 			});
-
 			thread.Start();
 		}
 		
@@ -69,22 +137,22 @@ namespace Middleware
 
 				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
 				Messages.GetResource receivedMsg = receivedEnvelope.message as Messages.GetResource;
-				Messages.AckNak replyMsg;
+				Messages.ResourceReply replyMsg;
+
 
 				if (agent.whiningTwines.Count > 0) {
 					Common.WhiningTwine whiningTwine = getWhiningTwine(receivedMsg.EnablingTick);
-					replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Success, whiningTwine);
+					replyMsg = new Messages.ResourceReply(Messages.Reply.PossibleStatus.Success, whiningTwine, "Here you go dawg");
 				} else {
-					replyMsg = new Messages.AckNak(Messages.Reply.PossibleStatus.Failure, 1, "Not enough twine");
+					replyMsg = new Messages.ResourceReply(Messages.Reply.PossibleStatus.Failure, null, "Not enough twine");
 				}
-				replyMsg.ConversationId = Common.MessageNumber.Create();
-				replyMsg.ConversationId.ProcessId = receivedMsg.ConversationId.ProcessId;
-				replyMsg.ConversationId.SeqNumber = receivedMsg.ConversationId.SeqNumber;
-				replyMsg.MessageNr.ProcessId = agentInfo.processId;
-				replyMsg.MessageNr.SeqNumber = (short)(receivedMsg.MessageNr.SeqNumber + 1);
+
+				replyMsg.ConversationId = receivedMsg.ConversationId;
 				Envelope replyEnv = new Envelope(replyMsg, receivedEnvelope.endPoint);
 				comm.sendEnvelope(replyEnv);
-				msgQueue.convoInProgressQueue.Remove(convKey);
+
+				ConcurrentQueue<Envelope> disposed;
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
 
 			});
 
@@ -93,21 +161,42 @@ namespace Middleware
 
 		private Common.Excuse getExcuse (Common.Tick requestTick) {
 			Common.Excuse excuse = agent.excuses.Dequeue();
-			//excuse.CreatorId = agentInfo.processId;
-			//excuse.Ticks.Add(new Common.Tick ());
 			excuse.RequestTick = requestTick;
-			return agent.excuses.Dequeue();
+			return excuse;
 		}
 
 
 		private Common.WhiningTwine getWhiningTwine (Common.Tick requestTick) {
 			Common.WhiningTwine whiningTwine = agent.whiningTwines.Dequeue();
-			//whiningTwine.CreatorId = agentInfo.processId;
-			//whiningTwine.Ticks.Add(new Common.Tick ());
 			whiningTwine.RequestTick = requestTick;
 			return whiningTwine;
 		}
 
+
+
+		private void SendReply (Envelope envelope, Action<Message> callback)
+		{
+			System.Threading.Thread thread = new System.Threading.Thread (delegate() {
+				string convKey = "" + envelope.message.ConversationId.ProcessId + "," + envelope.message.ConversationId.SeqNumber;
+				ConcurrentQueue<Envelope> disposed;
+				for (int i = 0; i < 3; ++i) {
+					comm.sendEnvelope(envelope);
+					for (int j = 0; j < 500; ++j) {
+						if (msgQueue.convoInProgressQueue.ContainsKey(convKey) && msgQueue.convoInProgressQueue[convKey].Count > 0) {
+							Envelope reply;
+							if(msgQueue.convoInProgressQueue[convKey].TryDequeue(out reply)){
+								msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+								callback(reply.message);
+								return;
+							}
+						}
+						System.Threading.Thread.Sleep(5);
+					}
+				}
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+			});
+			thread.Start();
+		}
 
 	}
 }

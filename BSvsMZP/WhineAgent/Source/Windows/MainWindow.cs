@@ -27,6 +27,20 @@ namespace WhineAgent
 		}
 
 		#endregion
+
+		[Export ("windowWillClose:")]
+		public void WindowWillClose(NSNotification notification)
+		{
+			Console.WriteLine("windowWillClose:");
+			NSApplication.SharedApplication.Terminate (this);       
+		}
+
+		[Export ("performClose:")]
+		public override void PerformClose (NSObject sender)
+		{
+			base.PerformClose(sender);
+			Console.WriteLine("windowWillClose:");
+		}
 	}
 }
 

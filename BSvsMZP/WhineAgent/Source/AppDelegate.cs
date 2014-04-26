@@ -17,10 +17,12 @@ namespace WhineAgent
 
 		public override void FinishedLaunching (NSObject notification)
 		{
+			wAgent.wAgent.GetProcessID();
 			mainWindowController = new MainWindowController ();
 			mainWindowController.wAgent = wAgent;
 			mainWindowController.Window.MakeKeyAndOrderFront(this);
 		}
+			
 	}
 }
 

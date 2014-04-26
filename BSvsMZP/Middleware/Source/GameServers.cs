@@ -7,7 +7,6 @@ namespace Middleware
 	{
 		public static Dictionary<string, SimpleServerInfo> GetAvailableServers ()
 		{
-			//RegistrarAlt.RegistrarAlt registrar = new RegistrarAlt.RegistrarAlt ("http://bsvszp.azurewebsites.net/RegistrarAlt.asmx");
 			RegistrarAlt.RegistrarAlt registrar = new RegistrarAlt.RegistrarAlt ("http://cs5200web.serv.usu.edu/RegistrarAlt.asmx");
 			RegistrarAlt.GameInfo[] gamesAvail = registrar.GetGames(RegistrarAlt.GameStatus.AVAILABLE);
 			Dictionary<string, SimpleServerInfo> games = new Dictionary<string, SimpleServerInfo> ();

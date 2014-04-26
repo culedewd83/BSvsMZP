@@ -3,6 +3,7 @@ using System.Net;
 using System.Collections.Generic;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
+using System.Collections.Concurrent;
 
 namespace Middleware
 {
@@ -19,6 +20,20 @@ namespace Middleware
 		public Queue<Common.Tick> ticks;
 		public Queue<Common.Bomb> bombs;
 		public bool shouldListen;
+		public bool gameHasStarted = false;
+		public bool gameHasEnded = false;
+		public Common.GameConfiguration gameConfig;
+		public Common.AgentList remoteExcuseAgents;
+		public Common.AgentList remoteWhiningAgents;
+		public Common.AgentList remoteBrilliantAgents;
+		public Common.AgentList remoteZombieAgents;
+		public System.Threading.Thread agentListThread;
+		public Dictionary<int, int> waitingForReply = new Dictionary<int, int>();
+		public ConcurrentDictionary<short, RemoteAgent> excuseAgents = new ConcurrentDictionary<short, RemoteAgent>();
+		public ConcurrentDictionary<short, RemoteAgent> whiningAgents = new ConcurrentDictionary<short, RemoteAgent>();
+		public ConcurrentDictionary<short, RemoteAgent> brillantAgents = new ConcurrentDictionary<short, RemoteAgent>();
+		public ConcurrentDictionary<short, RemoteAgent> zombieAgents = new ConcurrentDictionary<short, RemoteAgent>();
+
 
 		public Agent()
 		{
@@ -67,10 +82,89 @@ namespace Middleware
 
 		private Messages.GetResource makeGetResourceMessage(Messages.GetResource.PossibleResourceType type, Common.Tick tick) {
 			Messages.GetResource msg = new Messages.GetResource(agentInfo.gameID, type, tick);
-			//msg.ConversationId = agentInfo.getNewConvoNum();
-			//msg.MessageNr = msg.ConversationId;
 			return msg;
 		}
+
+		public void GetGameConfig()
+		{
+			Messages.GetResource msg = new Messages.GetResource (agentInfo.gameID, Messages.GetResource.PossibleResourceType.GameConfiguration);
+			Envelope env = new Envelope (msg, agentInfo.remoteServerEndPoint);
+			instigatorStrategies.GetGameConfig(env, (config) => {
+				gameConfig = config;
+			});
+		}
+
+		public void GetBrilliantAgentList()
+		{
+			Messages.GetResource msg = new Messages.GetResource (agentInfo.gameID, Messages.GetResource.PossibleResourceType.BrillianStudentList);
+			Envelope env = new Envelope (msg, agentInfo.remoteServerEndPoint);
+			instigatorStrategies.GetAgentList(env, (agentList) => {
+				remoteBrilliantAgents = agentList;
+			});
+		}
+
+		public void GetExcuseAgentList()
+		{
+			Messages.GetResource msg = new Messages.GetResource (agentInfo.gameID, Messages.GetResource.PossibleResourceType.ExcuseGeneratorList);
+			Envelope env = new Envelope (msg, agentInfo.remoteServerEndPoint);
+			instigatorStrategies.GetAgentList(env, (agentList) => {
+				remoteExcuseAgents = agentList;
+			});
+		}
+
+		public void GetWhiningAgentList()
+		{
+			Messages.GetResource msg = new Messages.GetResource (agentInfo.gameID, Messages.GetResource.PossibleResourceType.WhiningSpinnerList);
+			Envelope env = new Envelope (msg, agentInfo.remoteServerEndPoint);
+			instigatorStrategies.GetAgentList(env, (agentList) => {
+				remoteWhiningAgents = agentList;
+			});
+		}
+
+		public void GetZombieAgentList()
+		{
+			Messages.GetResource msg = new Messages.GetResource (agentInfo.gameID, Messages.GetResource.PossibleResourceType.ZombieProfessorList);
+			Envelope env = new Envelope (msg, agentInfo.remoteServerEndPoint);
+			instigatorStrategies.GetAgentList(env, (agentList) => {
+				remoteZombieAgents = agentList;
+			});
+		}
+
+		public List<Common.AgentInfo> CreateRandomAgentList (Common.AgentList lst)
+		{
+			List<Common.AgentInfo> agentList = new List<Common.AgentInfo> ();
+			foreach (Common.AgentInfo agent in lst) {
+				agentList.Add(agent);
+			}
+			List<Common.AgentInfo> rndList = new List<Common.AgentInfo> ();
+			Random rnd = new Random ();
+			while (agentList.Count > 0) {
+				int index = rnd.Next(0, agentList.Count);
+				rndList.Add(agentList[index]);
+				agentList.RemoveAt(index);
+			}
+			return rndList;
+		}
+
+		public void StartUpdatingAgentLists ()
+		{
+			agentListThread = new System.Threading.Thread(delegate(){
+				int counter = 0;
+				while(!gameHasEnded) {
+					counter = counter % 2;
+					if(counter == 0) {
+						GetExcuseAgentList();
+						GetWhiningAgentList();
+					}
+					GetBrilliantAgentList();
+					GetZombieAgentList();
+					counter++;
+					System.Threading.Thread.Sleep(5000);
+				}
+			});
+			agentListThread.Start();
+		}
+
 
 		public Messages.JoinGame makeJoinGameMessage ()
 		{
@@ -81,8 +175,6 @@ namespace Middleware
 			aInfo.LastName = "Smith";
 			aInfo.Id = Common.MessageNumber.LocalProcessId;
 			Messages.JoinGame msg = new Messages.JoinGame (agentInfo.gameID, aInfo);
-			//msg.ConversationId = agentInfo.getNewConvoNum();
-			//msg.MessageNr = msg.ConversationId;
 			return msg;
 		}
 
@@ -90,6 +182,87 @@ namespace Middleware
 		{
 			Common.MessageNumber.LocalProcessId = GameServers.GetProcessID();
 			agentInfo.processId = Common.MessageNumber.LocalProcessId;
+		}
+
+
+		public void GameHasStarted()
+		{
+			gameHasStarted = true;
+			//StartUpdatingAgentLists();
+			StartUpdateStream();
+			agentInfo.gameStatus = "Game in progress";
+		}
+
+		public void GameHasEnded()
+		{
+			gameHasEnded = true;
+			agentInfo.gameStatus = "Game has ended";
+			agentInfo.status = "Inactive";
+		}
+
+		public void ReceiveAgentInfo(Common.AgentInfo aInfo)
+		{
+			Console.WriteLine("AgentInfo received from game server");
+			agentInfo.status = "Active";
+			agentInfo.CommonAgentInfo = aInfo;
+			agentInfo.gameStatus = "Joined, Not Started";
+			GetGameConfig();
+		}
+
+		public void JoinGame(Common.EndPoint ep, Action<string> errorCallback, Action timeoutCallback) {
+			if (shouldListen) {
+				Envelope envelope = new Envelope (makeJoinGameMessage(), ep);
+				instigatorStrategies.JoinGame(envelope, (aInfo) => {
+					ReceiveAgentInfo(aInfo);
+				}, errorCallback, timeoutCallback);
+			}
+		}
+
+		public void getExcuse(Common.EndPoint ep) {
+			if (shouldListen && ticks.Count > 0) {
+				Envelope envelope = new Envelope (makeGetExcuseMessage(ticks.Dequeue()), ep);
+				instigatorStrategies.getExcuse(envelope, (excuse) => {
+					excuses.Enqueue(excuse);
+					waitingForReply.Remove(ep.Address);
+				}, (tick) => {
+					ticks.Enqueue(tick);
+					waitingForReply.Remove(ep.Address);
+				});
+			}
+		}
+
+//		public void receiveExcuse(Common.Excuse excuse) {
+//			excuses.Enqueue(excuse);
+//		}
+
+		public void getWhiningTwine(Common.EndPoint ep) {
+			if (shouldListen && ticks.Count > 0) {
+				Envelope envelope = new Envelope (makeGetWhiningTwineMessage(ticks.Dequeue()), ep);
+				instigatorStrategies.getWhiningTwine(envelope, (twine) => {
+					whiningTwines.Enqueue(twine);
+					waitingForReply.Remove(ep.Address);
+				}, (tick) => {
+					ticks.Enqueue(tick);
+					waitingForReply.Remove(ep.Address);
+				});
+			}
+		}
+
+//		public void receiveWhiningTwine(Common.WhiningTwine whine) {
+//			whiningTwines.Enqueue(whine);
+//		}
+
+
+		public void StartUpdateStream ()
+		{
+			Envelope envelope = new Envelope (new Messages.StartUpdateStream (), agentInfo.remoteServerEndPoint);
+			instigatorStrategies.StartUpdateStream(envelope, (didSucceed) => {
+				if (didSucceed) {
+					Console.WriteLine("Successfully started update stream");
+				} else {
+					Console.WriteLine("Failed to start update stream");
+				}
+			});
 		}
 
 	}

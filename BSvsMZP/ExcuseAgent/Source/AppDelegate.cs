@@ -17,6 +17,7 @@ namespace ExcuseAgent
 
 		public override void FinishedLaunching (NSObject notification)
 		{
+			eAgent.eAgent.GetProcessID();
 			mainWindowController = new MainWindowController ();
 			mainWindowController.eAgent = eAgent;
 			mainWindowController.Window.MakeKeyAndOrderFront(this);

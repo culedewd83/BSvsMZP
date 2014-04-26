@@ -53,6 +53,11 @@ namespace ExcuseAgent
 
 			FillGameServerComboBox();
 
+			btnExit.Activated += (object sender, EventArgs e) => {
+				Console.WriteLine("Closing App");
+				NSApplication.SharedApplication.Terminate (this);
+			};
+
 			btnRefresh.Activated += (object sender, EventArgs e) => {
 				RefeshButtonPressed();
 			};

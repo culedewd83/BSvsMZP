@@ -1,2 +1,424 @@
-JoinGame message sent
+Servers Refreshed
+message sent: JoinGame
+packet received
+received a message: AckNak
+message sent: AckNak
 AgentInfo received from game server
+message sent: GetResource
+packet received
+received a message: ConfigurationReply
+packet received
+received a message: StartGame
+message sent: ReadyReply
+packet received
+received a message: AckNak
+message sent: StartUpdateStream
+packet received
+received a message: AckNak
+Successfully started update stream
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply
+packet received
+received a message: TickDelivery
+packet received
+received a message: TickDelivery
+packet received
+received a message: AgentListReply

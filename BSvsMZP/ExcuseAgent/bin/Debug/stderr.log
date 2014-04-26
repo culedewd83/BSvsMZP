@@ -1,0 +1,14 @@
+Stack overflow in unmanaged: IP: 0x636e82, fault addr: 0xb0897f80
+Stack overflow in unmanaged: IP: 0x636e82, fault addr: 0xb0897ec0
+
+Unhandled Exception:
+System.StackOverflowException: The requested operation caused a stack overflow.
+  at (wrapper managed-to-native) object:__icall_wrapper_mono_array_new_specific (intptr,int)
+  at System.Net.Sockets.UdpClient.Receive (System.Net.IPEndPoint& remoteEP) [0x00006] in /private/tmp/source/bockbuild-mono-3.2.6/profiles/mono-mac-xamarin/build-root/mono-3.2.6/mcs/class/System/System.Net.Sockets/UdpClient.cs:302 
+  at Middleware.Communicator.<listenForMessages>m__B () [0x0001c] in /Users/jesse.rogers/Dropbox/School/Spring_2014/CS5200/BSvsMZP/BSvsMZP/Middleware/Source/Communicator.cs:44 
+  at System.Threading.Thread.StartInternal () [0x00016] in /private/tmp/source/bockbuild-mono-3.2.6/profiles/mono-mac-xamarin/build-root/mono-3.2.6/mcs/class/corlib/System.Threading/Thread.cs:680 
+[ERROR] FATAL UNHANDLED EXCEPTION: System.StackOverflowException: The requested operation caused a stack overflow.
+  at (wrapper managed-to-native) object:__icall_wrapper_mono_array_new_specific (intptr,int)
+  at System.Net.Sockets.UdpClient.Receive (System.Net.IPEndPoint& remoteEP) [0x00006] in /private/tmp/source/bockbuild-mono-3.2.6/profiles/mono-mac-xamarin/build-root/mono-3.2.6/mcs/class/System/System.Net.Sockets/UdpClient.cs:302 
+  at Middleware.Communicator.<listenForMessages>m__B () [0x0001c] in /Users/jesse.rogers/Dropbox/School/Spring_2014/CS5200/BSvsMZP/BSvsMZP/Middleware/Source/Communicator.cs:44 
+  at System.Threading.Thread.StartInternal () [0x00016] in /private/tmp/source/bockbuild-mono-3.2.6/profiles/mono-mac-xamarin/build-root/mono-3.2.6/mcs/class/corlib/System.Threading/Thread.cs:680 

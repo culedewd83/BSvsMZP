@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Middleware
 {
 	public class MessageQueue
 	{
-		public Queue<Envelope> newConvoQueue;
-		public Dictionary<string, Queue<Envelope>> convoInProgressQueue;
+		public ConcurrentQueue<Envelope> newConvoQueue;
+		public ConcurrentDictionary<string, ConcurrentQueue<Envelope>> convoInProgressQueue;
 
 		public MessageQueue()
 		{
-			newConvoQueue = new Queue<Envelope>();
-			convoInProgressQueue = new Dictionary<string, Queue<Envelope>>();
+			newConvoQueue = new ConcurrentQueue<Envelope>();
+			convoInProgressQueue = new ConcurrentDictionary<string, ConcurrentQueue<Envelope>>();
 		}
 	}
 }

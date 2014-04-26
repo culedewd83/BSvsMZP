@@ -4,19 +4,19 @@ namespace Middleware
 {
 	public class WhiningDoer
 	{
-		private Communicator comm;
+		//private Communicator comm;
 		private MessageQueue msgQueue;
 		private System.Threading.Thread doerThread;
 		private bool shouldListen;
 		ReplyDictionary replyDictionary;
-		AgentInfo agentInfo;
+		//AgentInfo agentInfo;
 
 
 		public WhiningDoer(Communicator comm, MessageQueue msgQueue, AgentInfo agentInfo, Agent agent)
 		{
-			this.comm = comm;
+			//this.comm = comm;
 			this.msgQueue = msgQueue;
-			this.agentInfo = agentInfo;
+			//this.agentInfo = agentInfo;
 			shouldListen = false;
 			replyDictionary = new ReplyDictionary(comm, msgQueue, agentInfo, agent);
 		}
@@ -43,22 +43,23 @@ namespace Middleware
 
 					while (msgQueue.newConvoQueue.Count > 0) {
 						messagesMoved++;
-						Envelope currEnv = msgQueue.newConvoQueue.Dequeue();
-
-						if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.GetResource.ToString())) {
-							if ((currEnv.message as Messages.GetResource).GetResourceType == Messages.GetResource.PossibleResourceType.WhiningTwine){
-								Console.WriteLine((currEnv.message as Messages.GetResource).GetResourceType.ToString());
-								if(replyDictionary.Strategies.ContainsKey((currEnv.message as Messages.GetResource).GetResourceType.ToString())){
+						Envelope currEnv;
+						if (msgQueue.newConvoQueue.TryDequeue(out currEnv)) {
+							if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.GetResource.ToString())) {
+								if ((currEnv.message as Messages.GetResource).GetResourceType == Messages.GetResource.PossibleResourceType.WhiningTwine){
 									replyDictionary.Strategies["WhiningTwine"].Invoke(currEnv);
-									Console.WriteLine("WhinningTwine reply sent");
 								}
+							} else if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.TickDelivery.ToString())) {
+								replyDictionary.Strategies["Tick"].Invoke(currEnv);
+							} else if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.StartGame.ToString())) {
+								replyDictionary.Strategies["StartGame"].Invoke(currEnv);
+							} else if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.EndGame.ToString())) {
+								replyDictionary.Strategies["EndGame"].Invoke(currEnv);
+							} else if (currEnv.message is Messages.AgentListReply) {
+								replyDictionary.Strategies["UpdateStream"].Invoke(currEnv);
 							}
-						} else if (currEnv.message.MessageTypeId().ToString().Equals(Messages.Message.MESSAGE_CLASS_IDS.TickDelivery.ToString())) {
-							replyDictionary.Strategies["Tick"].Invoke(currEnv);
 						}
 					}
-
-					//WhiningTwine
 
 					if (messagesMoved == 0) {
 						// Be nice, sleep for a awhile...

@@ -35,6 +35,18 @@ namespace Middleware
 				strats.ReceiveTick(envelope);
 			});
 
+
+			Strategies.Add("StartGame", delegate(Envelope envelope){
+				strats.ReceiveStartGame(envelope);
+			});
+
+			Strategies.Add("EndGame", delegate(Envelope envelope){
+				strats.ReceiveEndGame(envelope);
+			});
+
+			Strategies.Add("UpdateStream", delegate(Envelope envelope){
+				strats.ReceiveAgentUpdateStream(envelope);
+			});
 		}
 	}
 }

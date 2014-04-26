@@ -11,6 +11,7 @@
     <RootNamespace>WhineAgent</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <AssemblyName>WhineAgent</AssemblyName>
+    <StartupObject>WhineAgent.MainClass</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

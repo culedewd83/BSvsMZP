@@ -5,7 +5,7 @@ namespace WhineAgent
 {
 	public class WhineAgent
 	{
-		private WhineFactory wAgent = new WhineFactory();
+		public WhineFactory wAgent = new WhineFactory();
 		public Middleware.AgentInfo AgentInfo { get{ return  wAgent.agentInfo; }}
 		public int NumOfTicks { get { return wAgent.ticks.Count; }}
 		public int NumOfTwine { get { return wAgent.whiningTwines.Count; }}
@@ -57,8 +57,14 @@ namespace WhineAgent
 
 		private void UpdateAgent ()
 		{
-			if (wAgent.ticks.Count > 0) {
-				createWhiningTwine();
+			if (wAgent.gameHasEnded) {
+				wAgent.stopListening();
+			}
+
+			if (wAgent.gameConfig != null) {
+				if (wAgent.ticks.Count >= wAgent.gameConfig.NumberOfTicksRequiredToBuildTwine) {
+					createWhiningTwine();
+				}
 			}
 		}
 
@@ -66,7 +72,9 @@ namespace WhineAgent
 		{
 			Common.WhiningTwine twine = new Common.WhiningTwine ();
 			twine.CreatorId = wAgent.agentInfo.processId;
-			twine.Ticks.Add(wAgent.ticks.Dequeue());
+			for (int i = 0; i < wAgent.gameConfig.NumberOfTicksRequiredToBuildTwine; ++i) {
+				twine.Ticks.Add(wAgent.ticks.Dequeue());
+			}
 			wAgent.whiningTwines.Enqueue(twine);
 		}
 	}

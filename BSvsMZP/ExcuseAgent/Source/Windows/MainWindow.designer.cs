@@ -13,6 +13,9 @@ namespace ExcuseAgent
 	partial class MainWindowController
 	{
 		[Outlet]
+		MonoMac.AppKit.NSButton btnExit { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSButton btnJoinGame { get; set; }
 
 		[Outlet]
@@ -53,6 +56,11 @@ namespace ExcuseAgent
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (btnExit != null) {
+				btnExit.Dispose ();
+				btnExit = null;
+			}
+
 			if (btnJoinGame != null) {
 				btnJoinGame.Dispose ();
 				btnJoinGame = null;

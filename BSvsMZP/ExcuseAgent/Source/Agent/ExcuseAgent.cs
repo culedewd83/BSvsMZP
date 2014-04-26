@@ -5,7 +5,7 @@ namespace ExcuseAgent
 {
 	public class ExcuseAgent
 	{
-		private ExcuseFactory eAgent = new ExcuseFactory();
+		public ExcuseFactory eAgent = new ExcuseFactory();
 		public Middleware.AgentInfo AgentInfo { get{ return  eAgent.agentInfo; }}
 		public int NumOfExcuses { get { return eAgent.excuses.Count; }}
 		public int NumOfTicks { get { return eAgent.ticks.Count; }}
@@ -57,8 +57,14 @@ namespace ExcuseAgent
 
 		private void UpdateAgent ()
 		{
-			if (eAgent.ticks.Count > 0) {
-				createExcuse();
+			if (eAgent.gameHasEnded) {
+				eAgent.stopListening();
+			}
+
+			if (eAgent.gameConfig != null) {
+				if (eAgent.ticks.Count >= eAgent.gameConfig.NumberOfTicksRequiredToBuildAnExcuse) {
+					createExcuse();
+				}
 			}
 		}
 
@@ -66,7 +72,9 @@ namespace ExcuseAgent
 		{
 			Common.Excuse excuse = new Common.Excuse ();
 			excuse.CreatorId = eAgent.agentInfo.processId;
-			excuse.Ticks.Add(eAgent.ticks.Dequeue());
+			for (int i = 0; i < eAgent.gameConfig.NumberOfTicksRequiredToBuildAnExcuse; ++i) {
+				excuse.Ticks.Add(eAgent.ticks.Dequeue());
+			}
 			eAgent.excuses.Enqueue(excuse);
 		}
 	}

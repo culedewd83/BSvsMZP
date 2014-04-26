@@ -19,7 +19,7 @@ namespace Middleware
 			shouldListen = false;
 			envelopeBuffer = new List<Envelope>();
 			udpServer = new UdpClient(new IPEndPoint (IPAddress.Any, 0));
-			udpServer.Client.ReceiveTimeout = 10;
+			udpServer.Client.ReceiveTimeout = 1000;
 		}
 			
 
@@ -42,7 +42,7 @@ namespace Middleware
 				while(shouldListen){
 					try{
 						Byte[] receiveBytes = udpServer.Receive(ref receivedMessageEndPoint); 
-
+						Console.WriteLine("packet received");
 						Common.ByteList byteList = new Common.ByteList();
 						byteList.CopyFromBytes(receiveBytes);
 
@@ -51,7 +51,10 @@ namespace Middleware
 						msgEP.Port = receivedMessageEndPoint.Port;
 
 						lock(thisLock) {
-							envelopeBuffer.Add(new Envelope(Messages.Message.Create(byteList), msgEP));
+							Messages.Message msg = Messages.Message.Create(byteList);
+							envelopeBuffer.Add(new Envelope(msg, msgEP));
+
+							Console.WriteLine("received a message: " + msg.MessageTypeId());
 						}
 					}
 					catch (Exception e) {
@@ -61,7 +64,7 @@ namespace Middleware
 
 				udpServer.Close();
 				udpServer = new UdpClient(new IPEndPoint (IPAddress.Any, 0));
-				udpServer.Client.ReceiveTimeout = 10;
+				udpServer.Client.ReceiveTimeout = 1000;
 				
 			});
 
@@ -70,6 +73,7 @@ namespace Middleware
 			
 
 		public void sendEnvelope(Envelope msg) {
+			Console.WriteLine("message sent: " + msg.message.MessageTypeId());
 			Common.ByteList byteList = new Common.ByteList ();
 			msg.message.Encode(byteList);
 			byte[] bytes = byteList.ToBytes();
