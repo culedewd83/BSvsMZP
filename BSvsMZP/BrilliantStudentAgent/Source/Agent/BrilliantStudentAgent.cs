@@ -31,42 +31,9 @@ namespace BrilliantStudentAgent
 				bsAgent.stopListening();
 			}
 
-			TryToGetExcuse();
-			TryToGetWhiningTwine();
+			bsAgent.TryToGetExcuse();
+			bsAgent.TryToGetWhiningTwine();
 
-//			if (bsAgent.excuses.Count <= bsAgent.whiningTwines.Count) {
-//				TryToGetExcuse();
-//			} else {
-//				TryToGetWhiningTwine();
-//			}
-		}
-
-		public void TryToGetExcuse()
-		{
-			if (bsAgent.remoteExcuseAgents != null && bsAgent.remoteExcuseAgents.Count > 0 && bsAgent.ticks.Count > 0) {
-				List<Common.AgentInfo> excuseAgents = bsAgent.CreateRandomAgentList(bsAgent.remoteExcuseAgents);
-				foreach (Common.AgentInfo agent in excuseAgents) {
-					if (!bsAgent.waitingForReply.ContainsKey(agent.CommunicationEndPoint.Address)) {
-						bsAgent.waitingForReply.Add(agent.CommunicationEndPoint.Address, 1);
-						bsAgent.getExcuse(agent.CommunicationEndPoint);
-						break;
-					}
-				}
-			}
-		}
-
-		public void TryToGetWhiningTwine()
-		{
-			if (bsAgent.remoteWhiningAgents != null && bsAgent.remoteWhiningAgents.Count > 0 && bsAgent.ticks.Count > 0) {
-				List<Common.AgentInfo> whiningAgents = bsAgent.CreateRandomAgentList(bsAgent.remoteWhiningAgents);
-				foreach (Common.AgentInfo agent in whiningAgents) {
-					if (!bsAgent.waitingForReply.ContainsKey(agent.CommunicationEndPoint.Address)) {
-						bsAgent.waitingForReply.Add(agent.CommunicationEndPoint.Address, 1);
-						bsAgent.getWhiningTwine(agent.CommunicationEndPoint);
-						break;
-					}
-				}
-			}
 		}
 
 		public void SetGameServer(SimpleServerInfo server)

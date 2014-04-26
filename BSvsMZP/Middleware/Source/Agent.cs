@@ -146,6 +146,23 @@ namespace Middleware
 			return rndList;
 		}
 
+		public List<short> GetRandomizeIDs (ConcurrentDictionary<short, RemoteAgent> dict)
+		{
+			List<short> agentIDs = new List<short> ();
+			foreach (KeyValuePair<short, RemoteAgent> pair in dict) {
+				agentIDs.Add(pair.Key);
+			}
+
+			List<short> rndList = new List<short> ();
+			Random rnd = new Random ();
+			while (agentIDs.Count > 0) {
+				int index = rnd.Next(0, agentIDs.Count);
+				rndList.Add(agentIDs[index]);
+				agentIDs.RemoveAt(index);
+			}
+			return rndList;
+		}
+
 		public void StartUpdatingAgentLists ()
 		{
 			agentListThread = new System.Threading.Thread(delegate(){
@@ -188,7 +205,6 @@ namespace Middleware
 		public void GameHasStarted()
 		{
 			gameHasStarted = true;
-			//StartUpdatingAgentLists();
 			StartUpdateStream();
 			agentInfo.gameStatus = "Game in progress";
 		}
@@ -218,40 +234,61 @@ namespace Middleware
 			}
 		}
 
-		public void getExcuse(Common.EndPoint ep) {
+		public void TryToGetExcuse()
+		{
+			if (excuseAgents != null && excuseAgents.Count > 0 && ticks.Count > 0) {
+				List<short> agentIDs = GetRandomizeIDs(excuseAgents);
+				foreach (short agentID in agentIDs) {
+					if (!excuseAgents[agentID].currentlyCommunicatingWith) {
+						excuseAgents[agentID].currentlyCommunicatingWith = true;
+						GetExcuse(excuseAgents[agentID].agent);
+						break;
+					}
+				}
+			}
+		}
+
+		public void GetExcuse(Common.AgentInfo remoteAgent) {
 			if (shouldListen && ticks.Count > 0) {
-				Envelope envelope = new Envelope (makeGetExcuseMessage(ticks.Dequeue()), ep);
+				Envelope envelope = new Envelope (makeGetExcuseMessage(ticks.Dequeue()), remoteAgent.CommunicationEndPoint);
 				instigatorStrategies.getExcuse(envelope, (excuse) => {
 					excuses.Enqueue(excuse);
-					waitingForReply.Remove(ep.Address);
+					excuseAgents[remoteAgent.Id].currentlyCommunicatingWith = false;
+					excuseAgents[remoteAgent.Id].successfulReplies += 1;
 				}, (tick) => {
 					ticks.Enqueue(tick);
-					waitingForReply.Remove(ep.Address);
+					excuseAgents[remoteAgent.Id].currentlyCommunicatingWith = false;
 				});
 			}
 		}
 
-//		public void receiveExcuse(Common.Excuse excuse) {
-//			excuses.Enqueue(excuse);
-//		}
+		public void TryToGetWhiningTwine()
+		{
+			if (whiningAgents != null && whiningAgents.Count > 0 && ticks.Count > 0) {
+				List<short> agentIDs = GetRandomizeIDs(whiningAgents);
+				foreach (short agentID in agentIDs) {
+					if (!whiningAgents[agentID].currentlyCommunicatingWith) {
+						whiningAgents[agentID].currentlyCommunicatingWith = true;
+						GetWhiningTwine(whiningAgents[agentID].agent);
+						break;
+					}
+				}
+			}
+		}
 
-		public void getWhiningTwine(Common.EndPoint ep) {
+		public void GetWhiningTwine(Common.AgentInfo remoteAgent) {
 			if (shouldListen && ticks.Count > 0) {
-				Envelope envelope = new Envelope (makeGetWhiningTwineMessage(ticks.Dequeue()), ep);
+				Envelope envelope = new Envelope (makeGetWhiningTwineMessage(ticks.Dequeue()), remoteAgent.CommunicationEndPoint);
 				instigatorStrategies.getWhiningTwine(envelope, (twine) => {
 					whiningTwines.Enqueue(twine);
-					waitingForReply.Remove(ep.Address);
+					whiningAgents[remoteAgent.Id].currentlyCommunicatingWith = false;
+					whiningAgents[remoteAgent.Id].successfulReplies += 1;
 				}, (tick) => {
 					ticks.Enqueue(tick);
-					waitingForReply.Remove(ep.Address);
+					whiningAgents[remoteAgent.Id].currentlyCommunicatingWith = false;
 				});
 			}
 		}
-
-//		public void receiveWhiningTwine(Common.WhiningTwine whine) {
-//			whiningTwines.Enqueue(whine);
-//		}
-
 
 		public void StartUpdateStream ()
 		{
