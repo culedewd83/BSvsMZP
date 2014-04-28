@@ -1,23 +1,17 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="4/28/2014 2:45:38 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="4/28/2014 11:01:57 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BrilliantStudentAgent/Source/Windows/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs">
     <Files>
-      <File FileName="Middleware/Source/Agent.cs" Line="329" Column="7" />
+      <File FileName="Middleware/Source/Agent.cs" Line="367" Column="5" />
       <File FileName="Middleware/Source/InstigatorStrategies.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/ResponderStrategies.cs" Line="47" Column="82" />
-      <File FileName="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs" Line="1" Column="1" />
+      <File FileName="Middleware/Source/ResponderStrategies.cs" Line="1" Column="1" />
+      <File FileName="BrilliantStudentAgent/Source/Agent/BrilliantStudentAgent.cs" Line="38" Column="6" />
       <File FileName="Middleware/Source/Communicator.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/MessageQueue.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/Listener.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/ExcuseDoer.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/StudentDoer.cs" Line="1" Column="1" />
       <File FileName="Middleware/Source/WhiningDoer.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/RemoteAgent.cs" Line="1" Column="1" />
-      <File FileName="Middleware/Source/ReplyDictionary.cs" Line="1" Column="1" />
-      <File FileName="ExcuseAgent/Source/Windows/MainWindow.cs" Line="1" Column="1" />
-      <File FileName="ExcuseAgent/Source/Windows/MainWindow.designer.cs" Line="1" Column="1" />
-      <File FileName="BrilliantStudentAgent/Source/Windows/MainWindow.designer.cs" Line="1" Column="1" />
-      <File FileName="BrilliantStudentAgent/Source/Windows/MainWindow.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

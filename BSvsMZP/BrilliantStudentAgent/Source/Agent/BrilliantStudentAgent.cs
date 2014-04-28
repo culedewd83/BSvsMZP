@@ -35,15 +35,19 @@ namespace BrilliantStudentAgent
 				return;
 			}
 
+			//bsAgent.RandomMove();
+
 			Common.FieldLocation closestZombieLocation = bsAgent.ClosestZombieLocation();
 			if (closestZombieLocation != null) {
 				if (DistanceTo(closestZombieLocation) <= bsAgent.gameConfig.BombTwinePerSquareOfDistance) {
+					bsAgent.RandomMove();
 					//bsAgent.TryToThrowBombAt(closestZombieLocation);
 					//bsAgent.TryToMoveAwayFrom(closestZombieLocation);
 				} else if (DistanceTo(closestZombieLocation) <= bsAgent.gameConfig.BombTwinePerSquareOfDistance * 1.5) {
 					//bsAgent.TryToMoveCloserTo(closestZombieLocation);
+					bsAgent.TryToThrowBombAt(closestZombieLocation);
 				}
-				bsAgent.TryToThrowBombAt(closestZombieLocation);
+				//bsAgent.TryToThrowBombAt(closestZombieLocation);
 
 			}
 				

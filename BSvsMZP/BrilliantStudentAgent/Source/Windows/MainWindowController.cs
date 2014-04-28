@@ -54,7 +54,6 @@ namespace BrilliantStudentAgent
 			FillGameServerComboBox();
 
 
-
 			btnExit.Activated += (object sender, EventArgs e) => {
 				Console.WriteLine("Closing App");
 				NSApplication.SharedApplication.Terminate (this);

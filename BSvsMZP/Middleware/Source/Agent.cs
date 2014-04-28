@@ -187,9 +187,9 @@ namespace Middleware
 		{
 			Common.AgentInfo aInfo = new Common.AgentInfo ();
 			aInfo.AgentType = agentInfo.agentType;
-			aInfo.ANumber = "A12345678";
-			aInfo.FirstName = "John";
-			aInfo.LastName = "Smith";
+			aInfo.ANumber = "A01537812";
+			aInfo.FirstName = "Jesse";
+			aInfo.LastName = "Rogers";
 			aInfo.Id = Common.MessageNumber.LocalProcessId;
 			Messages.JoinGame msg = new Messages.JoinGame (agentInfo.gameID, aInfo);
 			return msg;
@@ -334,7 +334,40 @@ namespace Middleware
 				});
 			}
 		}
-			
+
+		public void RandomMove ()
+		{
+			if (ticks.Count <= 0) {
+				return;
+			}
+			int x = agentInfo.CommonAgentInfo.Location.X;
+			int y = agentInfo.CommonAgentInfo.Location.Y;
+
+			Random rand = new Random ();
+			int choice = rand.Next(1, 4);
+			switch (choice)
+			{
+			case 1:
+				x++;
+				break;
+
+			case 2:
+				x--;
+				break;
+			case 3:
+				y++;
+				break;
+			case 4:
+				y--;
+				break;
+			}
+			if (y > 0 && x > 0 && y < gameConfig.PlayingFieldHeight && x < gameConfig.PlayingFieldWidth) {
+				Common.FieldLocation loc = new Common.FieldLocation ((short)x, (short)y, true);
+				TryToMoveTo(loc);
+			}
+		}
+
+
 		public void TryToMoveTo(Common.FieldLocation location)
 		{
 			if (ticks.Count > 0) {
