@@ -72,6 +72,30 @@ namespace Middleware
 			thread.Start();
 		}
 
+		public void ReceiveChangeStrength (Envelope receivedEnvelope) {
+			System.Threading.Thread thread = new System.Threading.Thread(delegate(){
+				string convKey = "" + receivedEnvelope.message.ConversationId.ProcessId + "," + receivedEnvelope.message.ConversationId.SeqNumber;
+				Messages.AckNak replyMsg;
+
+				try {
+					agent.agentInfo.CommonAgentInfo.Strength += ((Messages.ChangeStrength)receivedEnvelope.message).DeltaValue;
+					replyMsg = new AckNak(Reply.PossibleStatus.Success, agent.agentInfo.CommonAgentInfo);
+				} catch {
+					replyMsg = new AckNak(Reply.PossibleStatus.Failure);
+				}
+
+				replyMsg.ConversationId = receivedEnvelope.message.ConversationId;
+				Envelope env = new Envelope(replyMsg, receivedEnvelope.endPoint);
+				comm.sendEnvelope(env);
+
+				ConcurrentQueue<Envelope> disposed;
+				msgQueue.convoInProgressQueue.TryRemove(convKey, out disposed);
+
+			});
+
+			thread.Start();
+		}
+
 		public void ReceiveEndGame (Envelope receivedEnvelope) {
 			System.Threading.Thread thread = new System.Threading.Thread(delegate(){
 
@@ -105,7 +129,7 @@ namespace Middleware
 		{
 			agent.GameHasStarted();
 		}
-
+			
 
 		public void sendExcuse (Envelope receivedEnvelope) {
 			System.Threading.Thread thread = new System.Threading.Thread(delegate(){

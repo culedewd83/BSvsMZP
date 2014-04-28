@@ -125,7 +125,44 @@ namespace Middleware
 			thread.Start();
 		}
 
+		public void ThrowBomb (Envelope envelope, Action<Common.AgentList> callback)
+		{
+			SendReply(envelope, (msg) => {
+				ThrowBombHandler(msg, callback);
+			});
+		}
 
+		private void ThrowBombHandler (Message msg, Action<Common.AgentList> callback)
+		{
+			try {
+				AckNak reply = msg as AckNak;
+				if (reply.Status == Reply.PossibleStatus.Success) {
+					Console.WriteLine("Bomb Thrown!!!");
+					callback(((Common.AgentList)reply.ObjResult));
+				} else {
+					Console.WriteLine("Bomb Failed");
+				}
+			} catch { Console.WriteLine("Could not process bomb reply"); }
+		}
+
+		public void MoveAgent (Envelope envelope, Action<Common.AgentInfo> callback)
+		{
+			SendReply(envelope, (msg) => {
+				MoveAgentHandler(msg, callback);
+			});
+		}
+
+		private void MoveAgentHandler (Message msg, Action<Common.AgentInfo> callback)
+		{
+			try {
+				AckNak reply = msg as AckNak;
+				if (reply.Status == Reply.PossibleStatus.Success) {
+					callback((Common.AgentInfo)reply.ObjResult);
+				} else {
+					Console.WriteLine("Failed to move: " + reply.Note);
+				}
+			} catch { }
+		}
 
 		public void GetAgentList (Envelope envelope, Action<Common.AgentList> callback)
 		{

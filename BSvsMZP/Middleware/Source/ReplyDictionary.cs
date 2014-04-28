@@ -47,6 +47,10 @@ namespace Middleware
 			Strategies.Add("UpdateStream", delegate(Envelope envelope){
 				strats.ReceiveAgentUpdateStream(envelope);
 			});
+
+			Strategies.Add("ChangeStrength", delegate(Envelope envelope){
+				strats.ReceiveChangeStrength(envelope);
+			});
 		}
 	}
 }

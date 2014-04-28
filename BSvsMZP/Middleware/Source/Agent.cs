@@ -234,6 +234,128 @@ namespace Middleware
 			}
 		}
 
+		public Common.FieldLocation ClosestZombieLocation ()
+		{
+			Common.FieldLocation location = null;
+			double shortestDistance = double.PositiveInfinity;
+			foreach (KeyValuePair<short, RemoteAgent> pair in zombieAgents) {
+				Common.AgentInfo zombie = zombieAgents [pair.Key].agent;
+				double distanceToThisZombie = Math.Sqrt(Math.Pow((agentInfo.CommonAgentInfo.Location.X - zombie.Location.X),2) + Math.Pow((agentInfo.CommonAgentInfo.Location.Y - zombie.Location.Y),2));
+				if (distanceToThisZombie < shortestDistance) {
+					shortestDistance = distanceToThisZombie;
+					location = zombie.Location;
+				}
+			}
+			return location;
+		}
+
+		public void TryToMoveAwayFrom(Common.FieldLocation location)
+		{
+
+		}
+
+		public void TryToMoveCloserTo(Common.FieldLocation location)
+		{
+			short myX = agentInfo.CommonAgentInfo.Location.X;
+			short myY = agentInfo.CommonAgentInfo.Location.Y;
+			short toX, toY;
+
+			if (location.Y == myY) {
+				if (location.X < myX) {
+					toX = (short)(myX - Math.Min(gameConfig.BrilliantStudentBaseSpeed, myX - location.X));
+				} else {
+					toX = (short)(myX + Math.Min(gameConfig.BrilliantStudentBaseSpeed, location.X - myX));
+				}
+				toY = myY;
+			} else if (location.X == myX) {
+				if (location.Y < myY) {
+					toY = (short)(myY - Math.Min(gameConfig.BrilliantStudentBaseSpeed, myY - location.Y));
+				} else {
+					toY = (short)(myY + Math.Min(gameConfig.BrilliantStudentBaseSpeed, location.Y - myY));
+				}
+				toX = myX;
+			} else if (location.Y < myY) {
+				if (location.X < myX) {
+					toX = (short)(myX - gameConfig.BrilliantStudentBaseSpeed/2);
+					toY = (short)(myY - gameConfig.BrilliantStudentBaseSpeed/2);
+					if (toX < 1) {
+						toX = 1;
+					}
+					if (toY < 1) {
+						toY = 1;
+					}
+				} else {
+					toX = (short)(myX + gameConfig.BrilliantStudentBaseSpeed/2);
+					toY = (short)(myY - gameConfig.BrilliantStudentBaseSpeed/2);
+					if (toX > gameConfig.PlayingFieldWidth) {
+						toX = gameConfig.PlayingFieldWidth;
+					}
+					if (toY < 1) {
+						toY = 1;
+					}
+				}
+			} else {
+				if (location.X < myX) {
+					toX = (short)(myX - gameConfig.BrilliantStudentBaseSpeed/2);
+					toY = (short)(myY + gameConfig.BrilliantStudentBaseSpeed/2);
+					if (toX < 1) {
+						toX = 1;
+					}
+					if (toY > gameConfig.PlayingFieldHeight) {
+						toY = gameConfig.PlayingFieldHeight;
+					}
+				} else {
+					toX = (short)(myX + gameConfig.BrilliantStudentBaseSpeed/2);
+					toY = (short)(myY + gameConfig.BrilliantStudentBaseSpeed/2);
+					if (toX > gameConfig.PlayingFieldWidth) {
+						toX = gameConfig.PlayingFieldWidth;
+					}
+					if (toY > gameConfig.PlayingFieldHeight) {
+						toY = gameConfig.PlayingFieldHeight;
+					}
+				}
+			}
+
+			Console.WriteLine("X: " + toX);
+			Console.WriteLine("Y: " + toY);
+
+			Common.FieldLocation moveLocation = new Common.FieldLocation (toX, toY, true);
+			TryToMoveTo(moveLocation);
+		}
+
+		public void TryToThrowBombAt(Common.FieldLocation location)
+		{
+			if (bombs.Count > 0 && ticks.Count > 0) {
+				//Console.WriteLine("trying to throw bomb!!!!!!!!!!!");
+				Messages.ThrowBomb bombMsg = new Messages.ThrowBomb (agentInfo.processId, bombs.Dequeue(), location, ticks.Dequeue());
+				Envelope envelope = new Envelope (bombMsg, agentInfo.remoteServerEndPoint);
+				instigatorStrategies.ThrowBomb(envelope, (updatedAgentInfo) => {
+					UpdateRemoteAgents(updatedAgentInfo);
+				});
+			}
+		}
+			
+		public void TryToMoveTo(Common.FieldLocation location)
+		{
+			if (ticks.Count > 0) {
+				Messages.Move moveMsg = new Messages.Move (agentInfo.processId, location, ticks.Dequeue());
+				Envelope envelope = new Envelope (moveMsg, agentInfo.remoteServerEndPoint);
+				instigatorStrategies.MoveAgent(envelope, (updatedAgentInfo) => {
+					agentInfo.CommonAgentInfo = updatedAgentInfo;
+				});
+			}
+		}
+
+		public void TryToMakeBomb()
+		{
+			if (ticks.Count > 0 && excuses.Count > 0 && whiningTwines.Count > 0) {
+				bombs.Enqueue(new Common.Bomb(agentInfo.processId,
+					new List<Common.Excuse>(){excuses.Dequeue()},
+					new List<Common.WhiningTwine>(){whiningTwines.Dequeue()},
+					ticks.Dequeue()));
+			}
+		}
+
 		public void TryToGetExcuse()
 		{
 			if (excuseAgents != null && excuseAgents.Count > 0 && ticks.Count > 0) {
@@ -300,6 +422,37 @@ namespace Middleware
 					Console.WriteLine("Failed to start update stream");
 				}
 			});
+		}
+
+		public void UpdateRemoteAgents (Common.AgentList agents)
+		{
+			foreach (Common.AgentInfo remoteAgent in agents) {
+				if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.BrilliantStudent) {
+					if (brillantAgents.ContainsKey(remoteAgent.Id)) {
+						brillantAgents [remoteAgent.Id].agent = remoteAgent;
+					} else {
+						brillantAgents.TryAdd(remoteAgent.Id, new RemoteAgent (remoteAgent));
+					}
+				} else if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.ExcuseGenerator) {
+					if (excuseAgents.ContainsKey(remoteAgent.Id)) {
+						excuseAgents [remoteAgent.Id].agent = remoteAgent;
+					} else {
+						excuseAgents.TryAdd(remoteAgent.Id, new RemoteAgent (remoteAgent));
+					}
+				} else if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.WhiningSpinner) {
+					if (whiningAgents.ContainsKey(remoteAgent.Id)) {
+						whiningAgents [remoteAgent.Id].agent = remoteAgent;
+					} else {
+						whiningAgents.TryAdd(remoteAgent.Id, new RemoteAgent (remoteAgent));
+					}
+				} else if (remoteAgent.AgentType == Common.AgentInfo.PossibleAgentType.ZombieProfessor) {
+					if (zombieAgents.ContainsKey(remoteAgent.Id)) {
+						zombieAgents [remoteAgent.Id].agent = remoteAgent;
+					} else {
+						zombieAgents.TryAdd(remoteAgent.Id, new RemoteAgent (remoteAgent));
+					}
+				}
+			}
 		}
 
 	}

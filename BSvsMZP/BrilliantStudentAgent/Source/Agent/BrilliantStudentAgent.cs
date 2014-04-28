@@ -13,14 +13,16 @@ namespace BrilliantStudentAgent
 		public int NumOfTwine { get { return bsAgent.whiningTwines.Count; }}
 		public int NumOfBombs { get { return bsAgent.bombs.Count; }}
 		System.Threading.Thread agentBrainThread;
+		public bool brainShouldLoop = true;
 
 		public BrilliantStudentAgent()
 		{
 			agentBrainThread = new System.Threading.Thread(delegate(){
-				while(true) {
+				while(brainShouldLoop) {
 					UpdateAgent();
 					System.Threading.Thread.Sleep(5);
 				}
+				Console.WriteLine("Agent brain has stopped");
 			});
 			agentBrainThread.Start();
 		}
@@ -29,12 +31,29 @@ namespace BrilliantStudentAgent
 		{
 			if (bsAgent.gameHasEnded) {
 				bsAgent.stopListening();
+				brainShouldLoop = false;
+				return;
 			}
 
-			bsAgent.TryToGetExcuse();
-			bsAgent.TryToGetWhiningTwine();
+			Common.FieldLocation closestZombieLocation = bsAgent.ClosestZombieLocation();
+			if (closestZombieLocation != null) {
+				if (DistanceTo(closestZombieLocation) <= bsAgent.gameConfig.BombTwinePerSquareOfDistance) {
+					//bsAgent.TryToThrowBombAt(closestZombieLocation);
+					//bsAgent.TryToMoveAwayFrom(closestZombieLocation);
+				} else if (DistanceTo(closestZombieLocation) <= bsAgent.gameConfig.BombTwinePerSquareOfDistance * 1.5) {
+					//bsAgent.TryToMoveCloserTo(closestZombieLocation);
+				}
+				bsAgent.TryToThrowBombAt(closestZombieLocation);
+
+			}
+				
+				bsAgent.TryToMakeBomb();
+				bsAgent.TryToGetExcuse();
+				bsAgent.TryToGetWhiningTwine();
 
 		}
+
+
 
 		public void SetGameServer(SimpleServerInfo server)
 		{
@@ -67,6 +86,12 @@ namespace BrilliantStudentAgent
 					timeoutCallback();
 				}
 			});
+		}
+
+		public double DistanceTo (Common.FieldLocation location)
+		{
+			return Math.Sqrt(Math.Pow((bsAgent.agentInfo.CommonAgentInfo.Location.X - location.X),2) + Math.Pow((bsAgent.agentInfo.CommonAgentInfo.Location.Y - location.Y),2));
+
 		}
 	}
 }

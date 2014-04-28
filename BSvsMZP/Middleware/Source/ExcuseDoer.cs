@@ -59,6 +59,8 @@ namespace Middleware
 								replyDictionary.Strategies["EndGame"].Invoke(currEnv);
 							} else if (currEnv.message is Messages.AgentListReply) {
 								replyDictionary.Strategies["UpdateStream"].Invoke(currEnv);
+							} else if (currEnv.message is Messages.ChangeStrength) {
+								replyDictionary.Strategies["ChangeStrength"].Invoke(currEnv);
 							}
 						}
 					}
